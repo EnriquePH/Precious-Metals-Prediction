@@ -1,5 +1,14 @@
+#  ----------------------------------------------------------------------------
+#  PRECIOUS METALS PRICE FORECAST
+#  File: helpers.R
+#  Enrique Pérez Herrero
+#  11/Dec/2015
+#  ----------------------------------------------------------------------------
+
+
 library(quantmod)
 library(ggplot2)
+library(forecast)
 
 
 getPreciousMetals <- function(metals, currencies){
@@ -37,3 +46,37 @@ currency_list <- c('US Dollar' = 'USD',
 
 
 smooth_method <- c('loess', 'lm')
+
+
+arimaForecastPlot <- function(forecast, start, ylabel, ...){
+    # data wrangling
+    time <- attr(forecast$x, 'tsp')
+    time <- seq(time[1], attr(forecast$mean, 'tsp')[2], by = 1/time[3])
+    lenx <- length(forecast$x)
+    lenmn <- length(forecast$mean)
+    time2 <- seq(from = start, to = start + lenx + lenmn , by = "1 day")
+    
+    df <- data.frame(time = as.Date(time + start),
+                     x = c(forecast$x, forecast$mean),
+                     forecast = c(rep(NA, lenx), forecast$mean),
+                     low1 = c(rep(NA, lenx), forecast$lower[, 1]),
+                     upp1 = c(rep(NA, lenx), forecast$upper[, 1]),
+                     low2 = c(rep(NA, lenx), forecast$lower[, 2]),
+                     upp2 = c(rep(NA, lenx), forecast$upper[, 2])
+    )
+    
+    
+    
+    p <- ggplot(df, aes(time, x), ...) +
+        geom_ribbon(aes(ymin = low2, ymax = upp2), fill = 'yellow') +
+        geom_ribbon(aes(ymin = low1, ymax = upp1), fill = 'orange') +
+        geom_line() +
+        geom_line(data = df[!is.na(df$forecast), ],
+                  aes(time, forecast),
+                  color = 'blue',
+                  na.rm = TRUE) +
+        ggtitle(paste('Forecasts from', forecast$method)) +
+        xlab('') +
+        ylab(ylabel)
+    return(p)
+}
