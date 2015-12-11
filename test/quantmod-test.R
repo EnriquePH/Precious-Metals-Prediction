@@ -39,6 +39,44 @@ currency_list <- c('US Dollar' = 'USD',
                    'Euro' = 'EUR',
                    'Pound Sterling' = 'GBP')
 
+
+
+# http://librestats.com/2012/06/11/autoplot-graphical-methods-with-ggplot2/
+
+arimaForecastPlot <- function(forecast, start, ...){
+    # data wrangling
+    time <- attr(forecast$x, 'tsp')
+    time <- seq(time[1], attr(forecast$mean, "tsp")[2], by = 1/time[3])
+    lenx <- length(forecast$x)
+    lenmn <- length(forecast$mean)
+    time2 <- seq(from = start, to = start + lenx + lenmn , by = "1 day")
+    
+    df <- data.frame(time = as.Date(time + start),
+                     x = c(forecast$x, forecast$mean),
+                     forecast = c(rep(NA, lenx), forecast$mean),
+                     low1 = c(rep(NA, lenx), forecast$lower[, 1]),
+                     upp1 = c(rep(NA, lenx), forecast$upper[, 1]),
+                     low2 = c(rep(NA, lenx), forecast$lower[, 2]),
+                     upp2 = c(rep(NA, lenx), forecast$upper[, 2])
+    )
+    
+    
+    
+    p <- ggplot(df, aes(time, x), ...) +
+        geom_ribbon(aes(ymin = low2, ymax = upp2), fill = 'yellow') +
+        geom_ribbon(aes(ymin = low1, ymax = upp1), fill = 'orange') +
+        geom_line() +
+        geom_line(data = df[!is.na(df$forecast), ],
+                  aes(time, forecast),
+                  color = 'blue',
+                  na.rm = TRUE) +
+        #scale_x_continuous('') +
+        #scale_y_continuous('') +
+        ggtitle(paste("Forecasts from", forecast$method)) +
+        xlab('')
+    return(p)
+}
+
 metals.df <- getPreciousMetals(precious_metals, currency_list)
 
 
@@ -72,17 +110,18 @@ plot(log10(palladium.USD), ylab = 'Log (Palladium Price)')
 # on both mean and variance
 
 plot(diff(log10(palladium.USD)), ylab = 'Differenced Log (Palladium Price)')
-axis(1, metals.df$date, format(metals.df$date, "%b %d"))
+axis(1, seq(from = start.date + 1, to = end.date , by = "1 day"))
+
 
 
 df <- data.frame(
-    date = seq(from = start.date , to = end.date - 1 , by="1 day"),
+    date = seq(from = start.date + 1, to = end.date , by = "1 day"),
     price = diff(log10(palladium.USD))
 )
 
 View(df)
 
-qplot(date, XPT.USD, data=df, geom="line")
+qplot(date, XPT.USD, data = df, geom = "line", xlab = '')
 
 # Step 5: Plot ACF and PACF to identify potential AR and MA model
 
@@ -102,9 +141,12 @@ summary(ARIMAfit)
 # Step 7: Forecast sales using the best fit ARIMA model
 
 pred <- forecast(ARIMAfit, h = 365)
-pred
+pred$mean
+arimaForecastPlot(pred, start = start.date)
 
-plot(pred, ylab = 'USD')
+
+
+plot(pred, my.ylab = 'USD')
 
 
 
