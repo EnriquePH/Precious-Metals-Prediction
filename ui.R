@@ -5,36 +5,25 @@
 #  11/Dec/2015
 #  ----------------------------------------------------------------------------
 
-library(shinythemes)
 
-source('helpers.R')
-
-shinyUI(fluidPage(theme = shinytheme("united"),
-    navbarPage("Menu",
-               tabPanel("Prices Plot",
-                        sidebarPanel(
-                            titlePanel('PRECIOUS METAL PRICES'),
-                            selectInput('metal_id', 'Metal:', precious_metals),
-                            selectInput('metal_curr', 'Currency:',
-                                        currency_list),
-                            selectInput('method', 'Method:', smooth_method),
-                            helpText(textOutput('text.sd')),
-                            helpText(textOutput('text.ed'))
-                        ),
-                        mainPanel(
-                            plotOutput('prices.plot')
-                            )
-                        ),
-               tabPanel("Forecast Plot",
-                        sidebarPanel(
-                            titlePanel('PRECIOUS METAL ARIMA FORECAST'),
-                            selectInput('metal_id1', 'Metal:', precious_metals),
-                            selectInput('metal_curr1', 'Currency:',
-                                        currency_list)
-                        ),
-                        mainPanel(
-                            plotOutput('prediction.plot')
-                            )
-                        )
+shinyUI(fluidPage(
+    theme = shinytheme("united"),
+    
+    titlePanel("PRECIOUS METALS PRICE FORECAST"),
+    sidebarLayout(
+        sidebarPanel(
+            selectInput('metal_id', 'Metal:', precious_metals),
+            selectInput('metal_curr', 'Currency:',
+                        currency_list),
+            selectInput('method', 'Method:', smooth_method),
+            helpText(textOutput('text.sd')),
+            helpText(textOutput('text.ed')),
+            width = 3
+        ),
+        mainPanel(tabsetPanel(
+            tabPanel("Prices Plot", plotOutput('prices.plot')),
+            tabPanel("Forecast Plot", plotOutput('prediction.plot')),
+            tabPanel("Prices Table", dataTableOutput('metals.table'))
+        ))
     )
 ))

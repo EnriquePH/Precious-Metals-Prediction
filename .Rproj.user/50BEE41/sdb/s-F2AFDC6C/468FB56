@@ -1,0 +1,17 @@
+{
+    "contents" : "#  ----------------------------------------------------------------------------\n#  PRECIOUS METALS PRICE FORECAST\n#  File: server.R\n#  Enrique Pérez Herrero\n#  11/Dec/2015\n#  ----------------------------------------------------------------------------\n\nsource('helpers.R')\n\nmetals.df <- getPreciousMetals(precious_metals, currency_list)\n\nstart.date <- head(metals.df$date, 1)\nend.date <- tail(metals.df$date, 1)\n\nshinyServer(function(input, output) {\n    output$prices.plot <- renderPlot({\n        tag <- paste(input$metal_id, input$metal_curr, sep = '.')\n        ggplot(data = metals.df , aes_string('date', tag)) +\n            geom_line() +\n            stat_smooth(\n                method = input$method, formula = y ~ x, size = 1\n            ) +\n            xlab('')\n        \n    })\n    \n    output$prediction.plot <- renderPlot({\n        tag <- paste(input$metal_id, input$metal_curr, sep = '.')\n        selected.metal <- ts(zoo(metals.df[tag],\n                                 order.by = metals.df$date))\n        arima.fit <- auto.arima(selected.metal,\n                                approximation = FALSE,\n                                trace = FALSE)\n        pred <- forecast(arima.fit, h = 365)\n        arimaForecastPlot(pred, start = start.date, ylabel = tag)\n        \n    })\n    \n    output$text.sd <- renderText({\n        paste0(\"Start Date: \",\n               start.date <- head(metals.df$date, 1))\n    })\n    \n    output$text.ed <- renderText({\n        paste0(\"End Date: \",\n               end.date <- tail(metals.df$date, 1))\n    })\n    \n    output$metals.table <- renderDataTable({\n        metals.df[, grepl(paste0(input$metal_id, '|date'), names(metals.df))]\n    })\n    \n})",
+    "created" : 1449911029546.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1704316988",
+    "id" : "468FB56",
+    "lastKnownWriteTime" : 1449940754,
+    "path" : "C:/CODE/mycode/02-PROJECT1500/01-Coursera/09-Developing Data Products/Project/Precious-Metals-Prediction/server.R",
+    "project_path" : "server.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

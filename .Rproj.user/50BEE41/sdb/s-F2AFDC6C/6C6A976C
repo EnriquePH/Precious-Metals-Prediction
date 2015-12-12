@@ -1,0 +1,17 @@
+{
+    "contents" : "#  ----------------------------------------------------------------------------\n#  PRECIOUS METALS PRICE FORECAST\n#  File: ui.R\n#  Enrique Pérez Herrero\n#  11/Dec/2015\n#  ----------------------------------------------------------------------------\n\n\nshinyUI(fluidPage(\n    theme = shinytheme(\"united\"),\n    \n    titlePanel(\"PRECIOUS METALS PRICE FORECAST\"),\n    sidebarLayout(\n        sidebarPanel(\n            selectInput('metal_id', 'Metal:', precious_metals),\n            selectInput('metal_curr', 'Currency:',\n                        currency_list),\n            selectInput('method', 'Method:', smooth_method),\n            helpText(textOutput('text.sd')),\n            helpText(textOutput('text.ed')),\n            width = 3\n        ),\n        mainPanel(tabsetPanel(\n            tabPanel(\"Prices Plot\", plotOutput('prices.plot')),\n            tabPanel(\"Forecast Plot\", plotOutput('prediction.plot')),\n            tabPanel(\"Prices Table\", dataTableOutput('metals.table'))\n        ))\n    )\n))\n",
+    "created" : 1449911031734.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1763878285",
+    "id" : "6C6A976C",
+    "lastKnownWriteTime" : 1449940899,
+    "path" : "C:/CODE/mycode/02-PROJECT1500/01-Coursera/09-Developing Data Products/Project/Precious-Metals-Prediction/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
