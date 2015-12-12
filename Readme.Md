@@ -1,7 +1,6 @@
-Coursera
+# Precious Metal Price ARIMA Forecast
 
-Developing Data Products
+Coursera - Developing Data Products
 
 Author:  Enrique Pérez Herrero
-
-Precious Metal Price ARIMA Prediction.
+Date: 12/Dec/2016

@@ -66,7 +66,6 @@ arimaForecastPlot <- function(forecast, start, ylabel, ...){
     )
     
     
-    
     p <- ggplot(df, aes(time, x), ...) +
         geom_ribbon(aes(ymin = low2, ymax = upp2), fill = 'yellow') +
         geom_ribbon(aes(ymin = low1, ymax = upp1), fill = 'orange') +
