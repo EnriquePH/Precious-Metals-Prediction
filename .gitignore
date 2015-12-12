@@ -4,6 +4,7 @@
 # R Code 
 .Rhistory
 .RData
+.Rproj.user/
 
 # LaTeX
 *.log

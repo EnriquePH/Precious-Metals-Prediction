@@ -90,13 +90,13 @@ end.date <- tail(metals.df$date, 1)
 
 palladium.USD <- ts(zoo(metals.df['XPT.USD'], order.by = metals.df$date))
 
-palladium.USD <- as.ts(metals.df['XPT.USD'], start = start.date, end = end.date)
+#palladium.USD <- as.ts(metals.df['XPT.USD'], start = start.date, end = end.date)
 
 plot(palladium.USD, xlab = 'Years', ylab = 'USD')
 
 # Step 2: Difference data to make data stationary on mean (remove trend)
 
-plot(diff(palladium.USD), ylab = 'Differenced Palladium Prices')
+plot(log10(diff(palladium.USD)), ylab = 'Differenced Palladium Prices')
 
 plot(log10(palladium.USD), ylab = 'Log (Palladium Price)')
 
@@ -116,10 +116,10 @@ axis(1, seq(from = start.date + 1, to = end.date , by = "1 day"))
 
 df <- data.frame(
     date = seq(from = start.date + 1, to = end.date , by = "1 day"),
-    price = diff(log10(palladium.USD))
+    price = diff(palladium.USD)
 )
 
-View(df)
+#View(df)
 
 qplot(date, XPT.USD, data = df, geom = "line", xlab = '')
 

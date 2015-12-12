@@ -5,6 +5,11 @@
 #  11/Dec/2015
 #  ----------------------------------------------------------------------------
 
+library(shiny)
+library(shinythemes)
+
+source('helpers.R')
+
 
 shinyUI(fluidPage(
     theme = shinytheme("united"),
@@ -15,15 +20,25 @@ shinyUI(fluidPage(
             selectInput('metal_id', 'Metal:', precious_metals),
             selectInput('metal_curr', 'Currency:',
                         currency_list),
-            selectInput('method', 'Method:', smooth_method),
+            #selectInput('method', 'Method:', smooth_method),
             helpText(textOutput('text.sd')),
             helpText(textOutput('text.ed')),
             width = 3
         ),
         mainPanel(tabsetPanel(
-            tabPanel("Prices Plot", plotOutput('prices.plot')),
-            tabPanel("Forecast Plot", plotOutput('prediction.plot')),
-            tabPanel("Prices Table", dataTableOutput('metals.table'))
+            tabPanel("Prices Plot",
+                     radioButtons('method', 'Method:', smooth_method),
+                     plotOutput('prices.plot')
+            ),
+            tabPanel('Prices Table', dataTableOutput('metals.table')),
+            tabPanel('Forecast Plot', plotOutput('prediction.plot')),
+            tabPanel('Arima model', verbatimTextOutput('text.arima')),
+            tabPanel('Differences Plot',
+                     checkboxInput('chcklog', 'log10', value = TRUE),
+                     plotOutput('diff.plot')
+                     ),
+            tabPanel('Residuals Plot', plotOutput('residuals.plot'))
+            
         ))
     )
 ))

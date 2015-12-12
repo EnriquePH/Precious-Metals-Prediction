@@ -5,8 +5,7 @@
 #  11/Dec/2015
 #  ----------------------------------------------------------------------------
 
-library(shiny)
-library(shinythemes)
+
 library(quantmod)
 library(ggplot2)
 library(forecast)
