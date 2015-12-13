@@ -70,8 +70,6 @@ arimaForecastPlot <- function(forecast, start, ...){
                      upp2 = c(rep(NA, lenx), forecast$upper[, 2])
     )
     
-    
-    
     p <- ggplot(df, aes(time, x), ...) +
         geom_ribbon(aes(ymin = low2, ymax = upp2), fill = 'yellow') +
         geom_ribbon(aes(ymin = low1, ymax = upp1), fill = 'orange') +
@@ -80,35 +78,50 @@ arimaForecastPlot <- function(forecast, start, ...){
                   aes(time, forecast),
                   color = 'blue',
                   na.rm = TRUE) +
-        #scale_x_continuous('') +
-        #scale_y_continuous('') +
         ggtitle(paste("Forecasts from", forecast$method)) +
         xlab('')
     return(p)
 }
 
+
+# Step 0: Get metals data from http://www.oanda.com
+
 metals.df <- getPreciousMetals(precious_metals, currency_list)
 
-
-View(metals.df)
-
-
-# Step 1: Plot Palladium price data as time series
+summary(metals.df)
 
 start.date <- head(metals.df$date, 1)
 end.date <- tail(metals.df$date, 1)
 
-palladium.USD <- ts(zoo(metals.df['XPT.USD'], order.by = metals.df$date))
+palladium.USD <- as.ts(metals.df['XPT.USD'], start = start.date, end = end.date)
 
-#palladium.USD <- as.ts(metals.df['XPT.USD'], start = start.date, end = end.date)
 
-plot(palladium.USD, xlab = 'Years', ylab = 'USD')
+# Step 1: Plot Palladium price data as time series
+
+palladium.USD.df <- data.frame(
+    date = seq(from = start.date, to = end.date , by = "1 day"),
+    price = palladium.USD
+    )
+
+qplot(date, XPT.USD,
+      data = palladium.USD.df,
+      geom = 'line',
+      main = 'Palladium USD Prices'
+      )
+
 
 # Step 2: Difference data to make data stationary on mean (remove trend)
 
-plot(log10(diff(palladium.USD)), ylab = 'Differenced Palladium Prices')
+diff.palladium.USD.df <- data.frame(
+    date = seq(from = start.date + 1, to = end.date , by = "1 day"),
+    price = diff(palladium.USD)
+)
 
-plot(log10(palladium.USD), ylab = 'Log (Palladium Price)')
+qplot(date, XPT.USD,
+      data = diff.palladium.USD.df,
+      geom = 'line',
+      main = 'Differenced Palladium USD Prices'
+      )
 
 
 # Step 3: log transform data to make data stationary on variance
@@ -120,7 +133,7 @@ plot(log10(palladium.USD), ylab = 'Log (Palladium Price)')
 # on both mean and variance
 
 plot(diff(log10(palladium.USD)), ylab = 'Differenced Log (Palladium Price)')
-axis(1, seq(from = start.date + 1, to = end.date , by = "1 day"))
+axis.Date(1, seq(from = start.date + 1, to = end.date , by = "1 day"), format="%m-%Y")
 
 
 
@@ -128,8 +141,6 @@ df <- data.frame(
     date = seq(from = start.date + 1, to = end.date , by = "1 day"),
     price = diff(palladium.USD)
 )
-
-#View(df)
 
 qplot(date, XPT.USD, data = df, geom = "line", xlab = '')
 
@@ -142,19 +153,23 @@ pacf(ts(diff(palladium.USD)), main = 'PACF Palladium Price')
 
 # Step 6: Identification of best fit ARIMA model
 
-ARIMAfit <- auto.arima(palladium.USD,
+arima.fit <- auto.arima(palladium.USD,
                        approximation = FALSE,
                        trace = FALSE)
-summary(ARIMAfit)
+summary(arima.fit)
 
 
 # Step 7: Forecast sales using the best fit ARIMA model
 
-pred <- forecast(ARIMAfit, h = 365)
+pred <- forecast(arima.fit, h = 365)
 pred$mean
 arimaForecastPlot(pred, start = start.date)
 
+View(pred)
 
+pred <- as.data.frame(pred)
+
+pred$date <- seq(from = end.date, to = end.date + 365 - 1, by = "1 day")
 
 plot(pred, my.ylab = 'USD')
 
@@ -164,21 +179,21 @@ plot(pred, my.ylab = 'USD')
 # information is left for extraction
 
 par(mfrow = c(1, 2))
-acf(ts(ARIMAfit$residuals), main = 'ACF Residual')
-pacf(ts(ARIMAfit$residuals), main ='PACF Residual')
+acf(ts(arima.fit$residuals), main = 'ACF Residual')
+pacf(ts(arima.fit$residuals), main ='PACF Residual')
 
 
-# ggplot() +
-#     geom_line(data = metals.df,
-#               aes(x = date, y = XAU.USD, colour = 'XAU.USD')) +
-#     geom_line(data = metals.df,
-#               aes(x = date, y = XPD.USD, colour = 'XPD.USD')) +
-#     geom_line(data = metals.df,
-#               aes(x = date, y = XPT.USD, colour = 'XPT.USD')) + 
-#     geom_line(data = metals.df,
-#               aes(x = date, y = XAG.USD, colour = 'XAG.USD')) +
-#     theme(legend.title = element_blank()) +
-#     xlab('') +
-#     ylab('USD')
+ggplot() +
+    geom_line(data = metals.df,
+              aes(x = date, y = XAU.USD, colour = 'XAU.USD')) +
+    geom_line(data = metals.df,
+              aes(x = date, y = XPD.USD, colour = 'XPD.USD')) +
+    geom_line(data = metals.df,
+              aes(x = date, y = XPT.USD, colour = 'XPT.USD')) + 
+    geom_line(data = metals.df,
+              aes(x = date, y = XAG.USD, colour = 'XAG.USD')) +
+    theme(legend.title = element_blank()) +
+    xlab('') +
+    ylab('USD')
     
 

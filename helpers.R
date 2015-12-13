@@ -14,6 +14,8 @@ library(forecast)
 
 # Read metals data from http://www.oanda.com
 
+max.range <- (5 * 365 - 13)
+
 getPreciousMetals <- function(metals, currencies) {
     metal_data <- list()
     for (metal in metals) {
@@ -23,7 +25,7 @@ getPreciousMetals <- function(metals, currencies) {
             metal_data[[num]] <- as.data.frame(
                 getMetals(
                     metal,
-                    from = Sys.Date() - (5 * 365 - 13),
+                    from = Sys.Date() - max.range,
                     to = Sys.Date(),
                     base.currency = currency,
                     auto.assign = FALSE
@@ -55,18 +57,16 @@ currency_list <- c('US Dollar' = 'USD',
 smooth_method <- c('loess', 'lm')
 
 
-# Arima forecast code based on:
+# Arima forecast plot code based on:
 # http://librestats.com/2012/06/11/autoplot-graphical-methods-with-ggplot2/
 
 arimaForecastPlot <- function(forecast, start, ylabel, ...) {
     # data wrangling
     time <- attr(forecast$x, 'tsp')
-    time <-
-        seq(time[1], attr(forecast$mean, 'tsp')[2], by = 1 / time[3])
+    time <- seq(time[1], attr(forecast$mean, 'tsp')[2], by = 1 / time[3])
     lenx <- length(forecast$x)
     lenmn <- length(forecast$mean)
-    time2 <-
-        seq(from = start, to = start + lenx + lenmn , by = "1 day")
+    time2 <- seq(from = start, to = start + lenx + lenmn , by = '1 day')
     
     df <- data.frame(
         time = as.Date(time + start),
@@ -77,7 +77,6 @@ arimaForecastPlot <- function(forecast, start, ylabel, ...) {
         low2 = c(rep(NA, lenx), forecast$lower[, 2]),
         upp2 = c(rep(NA, lenx), forecast$upper[, 2])
     )
-    
     
     p <- ggplot(df, aes(time, x), ...) +
         geom_ribbon(aes(ymin = low2, ymax = upp2), fill = 'yellow') +

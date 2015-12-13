@@ -22,7 +22,6 @@ shinyUI(fluidPage(
             selectInput('metal_id', 'Metal:', precious_metals),
             selectInput('metal_curr', 'Currency:',
                         currency_list),
-            #selectInput('method', 'Method:', smooth_method),
             helpText(textOutput('text.sd')),
             helpText(textOutput('text.ed')),
             width = 3
@@ -34,13 +33,13 @@ shinyUI(fluidPage(
             ),
             tabPanel('Prices Table', dataTableOutput('metals.table')),
             tabPanel('Forecast Plot', plotOutput('prediction.plot')),
+            tabPanel('Forecast Table', dataTableOutput('table.arima')),
             tabPanel('Arima model', verbatimTextOutput('text.arima')),
             tabPanel('Differences Plot',
                      checkboxInput('chcklog', 'log10', value = TRUE),
                      plotOutput('diff.plot')
                      ),
             tabPanel('Residuals Plot', plotOutput('residuals.plot'))
-            
         ))
     )
 ))

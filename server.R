@@ -15,6 +15,7 @@ metals.df <- getPreciousMetals(precious_metals, currency_list)
 start.date <- head(metals.df$date, 1)
 end.date <- tail(metals.df$date, 1)
 
+forecast.days <- 365
 
 shinyServer(function(input, output) {
     
@@ -36,7 +37,7 @@ shinyServer(function(input, output) {
         arima.fit <- auto.arima(selected.metal,
                                 approximation = FALSE,
                                 trace = FALSE)
-        pred <- forecast(arima.fit, h = 365)
+        pred <- forecast(arima.fit, h = forecast.days)
         arimaForecastPlot(pred, start = start.date, ylabel = tag)
         
     })
@@ -101,5 +102,26 @@ shinyServer(function(input, output) {
         acf(ts(arima.fit$residuals), main = 'ACF Residual')
         pacf(ts(arima.fit$residuals), main ='PACF Residual')
     })
+    
+    forecast.table <- reactive({
+        tag <- paste(input$metal_id, input$metal_curr, sep = '.')
+        selected.metal <- ts(zoo(metals.df[tag],
+                                 order.by = metals.df$date))
+        arima.fit <- auto.arima(selected.metal,
+                                approximation = FALSE,
+                                trace = FALSE)
+        pred <- forecast(arima.fit, h = forecast.days)
+        pred <- as.data.frame(pred)
+        pred <- cbind(date = 0, pred[-1])
+        pred$date <-
+            seq(from = end.date + 1,
+                to = end.date + forecast.days,
+                by = "1 day")
+        return(pred)
+        })
+    
+    output$table.arima <- renderDataTable({
+        forecast.table()
+    }, options = list(pageLength = 10))
     
 })
