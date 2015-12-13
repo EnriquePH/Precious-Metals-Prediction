@@ -1,8 +1,10 @@
 #  ----------------------------------------------------------------------------
 #  PRECIOUS METALS PRICE FORECAST
 #  File: helpers.R
-#  Enrique Pérez Herrero
-#  11/Dec/2015
+#  (c) 2015 - Enrique Pérez Herrero
+#  13/Dec/2015
+#  GNU GENERAL PUBLIC LICENSE Version 2, June 1991
+#  See licence: https://github.com/EnriquePH/Precious-Metals-Prediction
 #  ----------------------------------------------------------------------------
 
 
@@ -10,6 +12,7 @@ library(quantmod)
 library(ggplot2)
 library(forecast)
 
+# Read metals data from http://www.oanda.com
 
 getPreciousMetals <- function(metals, currencies) {
     metal_data <- list()
@@ -51,6 +54,9 @@ currency_list <- c('US Dollar' = 'USD',
 
 smooth_method <- c('loess', 'lm')
 
+
+# Arima forecast code based on:
+# http://librestats.com/2012/06/11/autoplot-graphical-methods-with-ggplot2/
 
 arimaForecastPlot <- function(forecast, start, ylabel, ...) {
     # data wrangling

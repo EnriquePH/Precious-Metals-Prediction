@@ -2,5 +2,6 @@
 
 Coursera - Developing Data Products
 
-Author:  Enrique Pérez Herrero
-Date: 12/Dec/2016
+13/Dec/2015
+GNU GENERAL PUBLIC LICENSE Version 2, June 1991
+See licence: https://github.com/EnriquePH/Precious-Metals-Prediction

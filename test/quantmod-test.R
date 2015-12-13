@@ -1,3 +1,13 @@
+#  ----------------------------------------------------------------------------
+#  PRECIOUS METALS PRICE FORECAST
+#  File: quantmod-test.R
+#  (c) 2015 - Enrique Pérez Herrero
+#  13/Dec/2015
+#  GNU GENERAL PUBLIC LICENSE Version 2, June 1991
+#  See licence: https://github.com/EnriquePH/Precious-Metals-Prediction
+#  ----------------------------------------------------------------------------
+
+
 library(quantmod)
 library(ggplot2)
 library(forecast)
