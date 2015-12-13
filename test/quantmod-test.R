@@ -13,6 +13,10 @@ library(ggplot2)
 library(forecast)
 library(scales)
 
+# Parameters
+
+forecast.days <- 365
+max.range <- (5 * 365 - 13)
 
 # https://en.wikipedia.org/wiki/Precious_metal
 
@@ -24,7 +28,7 @@ getPreciousMetals <- function(metals, currencies){
             print(num)
             metal_data[[num]] <- as.data.frame(
                 getMetals(metal,
-                          from = Sys.Date() - (5*365 - 13),
+                          from = Sys.Date() - max.range,
                           to = Sys.Date(),
                           base.currency = currency,
                           auto.assign = FALSE
@@ -74,12 +78,15 @@ arimaForecastPlot <- function(forecast, start, ...){
         geom_ribbon(aes(ymin = low2, ymax = upp2), fill = 'yellow') +
         geom_ribbon(aes(ymin = low1, ymax = upp1), fill = 'orange') +
         geom_line() +
-        geom_line(data = df[!is.na(df$forecast), ],
-                  aes(time, forecast),
-                  color = 'blue',
-                  na.rm = TRUE) +
+        geom_line(
+            data = df[!is.na(df$forecast),],
+            aes(time, forecast),
+            color = 'blue',
+            na.rm = TRUE
+        ) +
         ggtitle(paste("Forecasts from", forecast$method)) +
-        xlab('')
+        xlab('') +
+        ylab('USD')
     return(p)
 }
 
@@ -132,17 +139,19 @@ plot(log10(palladium.USD), ylab = 'Log (Palladium Price)')
 # Step 4: Difference log transform data to make data stationary
 # on both mean and variance
 
-plot(diff(log10(palladium.USD)), ylab = 'Differenced Log (Palladium Price)')
-axis.Date(1, seq(from = start.date + 1, to = end.date , by = "1 day"), format="%m-%Y")
-
-
 
 df <- data.frame(
     date = seq(from = start.date + 1, to = end.date , by = "1 day"),
-    price = diff(palladium.USD)
+    price = log10(diff(palladium.USD))
 )
 
-qplot(date, XPT.USD, data = df, geom = "line", xlab = '')
+qplot(
+    date, XPT.USD,
+    data = df,
+    geom = "line",
+    xlab = '',
+    main = 'Differenced Log (Palladium Price)'
+)
 
 # Step 5: Plot ACF and PACF to identify potential AR and MA model
 
@@ -161,17 +170,9 @@ summary(arima.fit)
 
 # Step 7: Forecast sales using the best fit ARIMA model
 
-pred <- forecast(arima.fit, h = 365)
+pred <- forecast(arima.fit, h = forecast.days)
 pred$mean
 arimaForecastPlot(pred, start = start.date)
-
-View(pred)
-
-pred <- as.data.frame(pred)
-
-pred$date <- seq(from = end.date, to = end.date + 365 - 1, by = "1 day")
-
-plot(pred, my.ylab = 'USD')
 
 
 

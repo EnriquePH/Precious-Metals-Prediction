@@ -1,4 +1,4 @@
-# Precious Metal Price ARIMA Forecast
+# Precious Metals Price ARIMA Forecast
 
 ## Coursera - Developing Data Products
 

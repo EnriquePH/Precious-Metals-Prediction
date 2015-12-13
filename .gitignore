@@ -5,9 +5,14 @@
 .Rhistory
 .RData
 .Rproj.user/
+.Rproj
 
 # LaTeX
 *.log
 *.aux
 *.synctex.gz
 *.blg
+
+# Other
+Readme.html
+slidify/
