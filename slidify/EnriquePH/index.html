@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PRECIOUS METALS PRICE FORECAST</title>
+  <meta charset="utf-8">
+  <meta name="description" content="PRECIOUS METALS PRICE FORECAST">
+  <meta name="author" content="Enrique Pérez Herrero">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>PRECIOUS METALS PRICE FORECAST</h1>
+    <h2>ARIMA time series forecast</h2>
+    <p>Enrique Pérez Herrero<br/>Mining Engineer</p>
+  </hgroup>
+  <article></article>  
+  <footer class = 'license'>
+    <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>
+    <img width = '80px' src = 'http://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png'>
+    </a>
+  </footer>
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <article data-timings="">
+    <style>
+.title-slide {
+  background-color: #C8FE2E;
+}
+</style>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Metals Plot</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<hr noshade size=6 color=#C8FE2E>
+<div style='float:left;width:48%;'>
+  <p>hello</p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"> </p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>App Tab Panels</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<hr noshade size=6 color=#C8FE2E>
+<div style='float:left;width:48%;'>
+  <h3>- Prices Plot</h3>
+
+<p>Shows a price plot for the selected metal and currency, and a control to change adjusted statistics: linear or loess </p>
+
+<h3>- Prices Table</h3>
+
+<p>Shows the price table data for the selected metal and several currencies</p>
+
+<h3>- Forecast Plot</h3>
+
+<p>Shows the <a href="https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average">ARIMA</a> forecast for the next 365 days as a blue line, 80% confidence interval is displayed in orange, while 90% is in yellow.</p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <h3>- Forecast Table</h3>
+
+<p>Displays forecasted data table</p>
+
+<h3>- Arima model</h3>
+
+<p>Shows adjusted model using <code>auto.arima</code> from the <code>forecast</code> package</p>
+
+<h3>- Differences Plot</h3>
+
+<p>Plots first differences for the selected metal price or the differences of the data base 10 logarithm</p>
+
+<h3>- Residuals Plot</h3>
+
+<p>Plots the ACF and the <a href="https://en.wikipedia.org/wiki/Partial_autocorrelation_function">PACF</a></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Links</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<hr noshade size=6 color=#C8FE2E>
+<div style='float:left;width:48%;'>
+  <ul>
+<li><p>Autoplot: Graphical Methods with ggplot2   <a href="http://librestats.com/2012/06/11/autoplot-graphical-methods-with-ggplot2/">http://librestats.com/2012/06/11/autoplot-graphical-methods-with-ggplot2/</a></p></li>
+<li><p>MORE BLACKBOX ANALYSIS - ARIMA MODELING IN R<br>
+<a href="http://businessforecastblog.com/more-blackbox-analysis-arima-modeling-in-r/">http://businessforecastblog.com/more-blackbox-analysis-arima-modeling-in-r/</a></p></li>
+</ul>
+
+</div>
+<div style='float:right;width:48%;'>
+  <ul>
+<li><p>Step-by-Step Graphic Guide to Forecasting through ARIMA Modeling in R - Manufacturing Case Study Example (Part 4)<br>
+<a href="http://ucanalytics.com/blogs/step-by-step-graphic-guide-to-forecasting-through-arima-modeling-in-r-manufacturing-case-study-example/">http://ucanalytics.com/blogs/step-by-step-graphic-guide-to-forecasting-through-arima-modeling-in-r-manufacturing-case-study-example/</a></p></li>
+<li><p>Automatic Time Series Forecasting: The forecast Package for R<br>
+Journal of Statistical Software July 2008, Volume 27, Issue 3.<br>
+<a href="http://www.jstatsoft.org/article/view/v027i03">http://www.jstatsoft.org/article/view/v027i03</a></p></li>
+<li><p>Forecasting: principles and practice<br>
+<a href="https://www.otexts.org/fpp">https://www.otexts.org/fpp</a></p></li>
+</ul>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='NA'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Metals Plot'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='App Tab Panels'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Links'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
