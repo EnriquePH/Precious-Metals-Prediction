@@ -50,11 +50,15 @@ currency_list <- c('US Dollar' = 'USD',
 metals.df <- getPreciousMetals(precious_metals, currency_list)
 
 
-m1 <- mPlot(x = "date",
+m1 <- mPlot(x = 'date',
             y = c('XAU.USD', 'XPT.USD'),
-            type = "Line",
+            type = 'Line',
+            events = paste(2011:2016),
+            eventLineColors = 'black',
+            eventStrokeWidth = .1,
+            #behaveLikeLine = TRUE,
             data = metals.df
             )
-m1$set(pointSize = 0, lineWidth = 1)
+m1$set(pointSize = 0, lineWidth = 2)
 #m1$print("chart2")
-m1$show("server")
+m1$show('server')
