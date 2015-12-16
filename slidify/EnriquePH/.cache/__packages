@@ -1,9 +1,15 @@
 base
+slidify
+slidifyLibraries
+knitr
+reshape2
 zoo
 xts
 TTR
 quantmod
-ggplot2
+shiny
 timeDate
 forecast
 scales
+rCharts
+base64enc

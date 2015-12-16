@@ -4,13 +4,15 @@ subtitle    : ARIMA time series forecast
 author      : Enrique Pérez Herrero
 job         : Mining Engineer
 license     : by-nc-sa
-framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+logo        : logo.png
+framework   : io2012      # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
 widgets     : []            # {mathjax, quiz, bootstrap}
-mode        : selfcontained # {standalone, draft}
+mode        : selfcontained # {selfcontained, standalone, draft}
 knit        : slidify::knit2slides
----
+ext_widgets : {rCharts:  ["libraries/morris"]} # ["libraries/highcharts", "libraries/nvd3"]
+--- 
 
 <style>
 .title-slide {
@@ -18,6 +20,21 @@ knit        : slidify::knit2slides
 }
 </style>
 
+<style>
+aside.gdbar img {
+  width:  85px; 
+  height: 85px; 
+  position: absolute;
+  right: 0;
+  margin: 5px 5px;
+}
+</style>
+
+<style>
+.testfont{
+  font-size: 12px;
+   }
+</style>
 
 --- .class #id &twocol
 
@@ -32,14 +49,18 @@ hello
 
 
 
-![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2-1.png) 
 
+<iframe src ='figures/figure01.html', width = "400px", height = "400px">
+ </iframe> 
 
 --- .class #id &twocol
 
 ## App Tab Panels
 
+
+
 *** =left
+
 ### - Prices Plot  
 Shows a price plot for the selected metal and currency, and a control to change adjusted statistics: linear or loess 
 ### - Prices Table  
@@ -58,28 +79,31 @@ Plots first differences for the selected metal price or the differences of the d
 Plots the ACF and the [PACF](https://en.wikipedia.org/wiki/Partial_autocorrelation_function)
 
 
---- .class #id &twocol
+--- .class .testfont #id &twocol
 ## Links
+
 
 
 *** =left
 
-* Autoplot: Graphical Methods with ggplot2   http://librestats.com/2012/06/11/autoplot-graphical-methods-with-ggplot2/
+* [Autoplot: Graphical Methods with ggplot2](http://librestats.com/2012/06/11/autoplot-graphical-methods-with-ggplot2/)
 
-* MORE BLACKBOX ANALYSIS - ARIMA MODELING IN R  
-http://businessforecastblog.com/more-blackbox-analysis-arima-modeling-in-r/
+* [More blackbox analysis - Arima modeling in R](http://businessforecastblog.com/more-blackbox-analysis-arima-modeling-in-r/)
+
+* [Precious Metals - Wikipedia](https://en.wikipedia.org/wiki/Precious_metal)
+
+* [Palladium as an investment - Wikipedia](https://en.wikipedia.org/wiki/Palladium_as_an_investment)
 
 *** =right
 
-* Step-by-Step Graphic Guide to Forecasting through ARIMA Modeling in R - Manufacturing Case Study Example (Part 4)  
-http://ucanalytics.com/blogs/step-by-step-graphic-guide-to-forecasting-through-arima-modeling-in-r-manufacturing-case-study-example/
+* [Step-by-Step Graphic Guide to Forecasting through ARIMA Modeling in R - Manufacturing Case Study Example (Part 4)](http://ucanalytics.com/blogs/step-by-step-graphic-guide-to-forecasting-through-arima-modeling-in-r-manufacturing-case-study-example/)
 
 * Automatic Time Series Forecasting: The forecast Package for R  
-Journal of Statistical Software July 2008, Volume 27, Issue 3.  
-http://www.jstatsoft.org/article/view/v027i03
+[Journal of Statistical Software July 2008, Volume 27, Issue 3.](http://www.jstatsoft.org/article/view/v027i03)
 
-* Forecasting: principles and practice  
-https://www.otexts.org/fpp
+* [Forecasting: principles and practice](https://www.otexts.org/fpp)
+
+* [OANDA](http://www.oanda.com/)
 
 
 

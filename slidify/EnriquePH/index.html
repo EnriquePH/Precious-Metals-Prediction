@@ -13,7 +13,7 @@
     media="only screen and (max-device-width: 480px)" >
   <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
   <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
-  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="libraries/widgets/morris/css/morris.css"></link>
 
   
   <!-- Grab CDN jQuery, fall back to local if offline -->
@@ -23,7 +23,10 @@
     src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
   </script>
   
-  
+  <script src="libraries/widgets/morris/js/jquery-1.8.2.min.js"></script>
+<script src="libraries/widgets/morris/js/raphael-2.1.0.min.js"></script>
+<script src="libraries/widgets/morris/js/morris.min.js"></script>
+
 
 </head>
 <body style="opacity: 0">
@@ -31,6 +34,9 @@
     
     <!-- LOGO SLIDE -->
         <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="assets/img/logo.png">
+  </aside>
   <hgroup class="auto-fadein">
     <h1>PRECIOUS METALS PRICE FORECAST</h1>
     <h2>ARIMA time series forecast</h2>
@@ -54,6 +60,22 @@
 }
 </style>
 
+<style>
+aside.gdbar img {
+  width:  85px; 
+  height: 85px; 
+  position: absolute;
+  right: 0;
+  margin: 5px 5px;
+}
+</style>
+
+<style>
+.testfont{
+  font-size: 12px;
+   }
+</style>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -70,7 +92,8 @@
 
 </div>
 <div style='float:right;width:48%;'>
-  <p><img src="assets/fig/unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2"> </p>
+  <iframe src ='figures/figure01.html', width = "400px", height = "400px">
+ </iframe> 
 
 </div>
   </article>
@@ -120,7 +143,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="class" id="id" style="background:;">
+<slide class="class testfont" id="id" style="background:;">
   <hgroup>
     <h2>Links</h2>
   </hgroup>
@@ -129,21 +152,20 @@
 <hr noshade size=6 color=#C8FE2E>
 <div style='float:left;width:48%;'>
   <ul>
-<li><p>Autoplot: Graphical Methods with ggplot2   <a href="http://librestats.com/2012/06/11/autoplot-graphical-methods-with-ggplot2/">http://librestats.com/2012/06/11/autoplot-graphical-methods-with-ggplot2/</a></p></li>
-<li><p>MORE BLACKBOX ANALYSIS - ARIMA MODELING IN R<br>
-<a href="http://businessforecastblog.com/more-blackbox-analysis-arima-modeling-in-r/">http://businessforecastblog.com/more-blackbox-analysis-arima-modeling-in-r/</a></p></li>
+<li><p><a href="http://librestats.com/2012/06/11/autoplot-graphical-methods-with-ggplot2/">Autoplot: Graphical Methods with ggplot2</a></p></li>
+<li><p><a href="http://businessforecastblog.com/more-blackbox-analysis-arima-modeling-in-r/">More blackbox analysis - Arima modeling in R</a></p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Precious_metal">Precious Metals - Wikipedia</a></p></li>
+<li><p><a href="https://en.wikipedia.org/wiki/Palladium_as_an_investment">Palladium as an investment - Wikipedia</a></p></li>
 </ul>
 
 </div>
 <div style='float:right;width:48%;'>
   <ul>
-<li><p>Step-by-Step Graphic Guide to Forecasting through ARIMA Modeling in R - Manufacturing Case Study Example (Part 4)<br>
-<a href="http://ucanalytics.com/blogs/step-by-step-graphic-guide-to-forecasting-through-arima-modeling-in-r-manufacturing-case-study-example/">http://ucanalytics.com/blogs/step-by-step-graphic-guide-to-forecasting-through-arima-modeling-in-r-manufacturing-case-study-example/</a></p></li>
+<li><p><a href="http://ucanalytics.com/blogs/step-by-step-graphic-guide-to-forecasting-through-arima-modeling-in-r-manufacturing-case-study-example/">Step-by-Step Graphic Guide to Forecasting through ARIMA Modeling in R - Manufacturing Case Study Example (Part 4)</a></p></li>
 <li><p>Automatic Time Series Forecasting: The forecast Package for R<br>
-Journal of Statistical Software July 2008, Volume 27, Issue 3.<br>
-<a href="http://www.jstatsoft.org/article/view/v027i03">http://www.jstatsoft.org/article/view/v027i03</a></p></li>
-<li><p>Forecasting: principles and practice<br>
-<a href="https://www.otexts.org/fpp">https://www.otexts.org/fpp</a></p></li>
+<a href="http://www.jstatsoft.org/article/view/v027i03">Journal of Statistical Software July 2008, Volume 27, Issue 3.</a></p></li>
+<li><p><a href="https://www.otexts.org/fpp">Forecasting: principles and practice</a></p></li>
+<li><p><a href="http://www.oanda.com/">OANDA</a></p></li>
 </ul>
 
 </div>

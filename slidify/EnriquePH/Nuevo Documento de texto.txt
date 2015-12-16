@@ -1,9 +1,8 @@
+```{r, echo=FALSE, message=FALSE, results="hide"}
 library(quantmod)
 library(ggplot2)
 library(forecast)
 library(scales)
-library(rCharts)
-library(reshape2)
 
 # Parameters
 
@@ -30,9 +29,7 @@ getPreciousMetals <- function(metals, currencies){
     }
     # Convert metal_data to df and improve formatting.
     metal_data <- as.data.frame(metal_data)
-    # rCharts needs date as character
-    metal_data <- cbind(date = as.character(rownames(metal_data)),
-                        metal_data)
+    metal_data <- cbind(date = as.Date(rownames(metal_data)), metal_data)
     rownames(metal_data) <- c(1: nrow(metal_data))
     return(metal_data)
 }
@@ -48,16 +45,14 @@ currency_list <- c('US Dollar' = 'USD',
                    'Pound Sterling' = 'GBP')
 
 metals.df <- getPreciousMetals(precious_metals, currency_list)
+```
 
 
-m1 <- mPlot(x = 'date',
-            y = paste(precious_metals, 'USD', sep = '.'),
-            type = 'Line',
-            events = paste(2011:2016),
-            eventLineColors = 'black',
-            eventStrokeWidth = .1,
-            data = metals.df
-            )
-m1$set(pointSize = 0, lineWidth = 1)
-#m1$print("chart2")
-m1$show('server')
+```{r, echo=FALSE}
+ggplot() +
+ geom_line(data = metals.df, aes(x = date, y = XAU.USD, colour='XAU.USD')) +
+ geom_line(data = metals.df, aes(x = date, y = XPD.USD, colour='XPD.USD')) +
+ geom_line(data = metals.df, aes(x = date, y = XPT.USD, colour='XPT.USD')) + 
+ geom_line(data = metals.df, aes(x = date, y = XAG.USD, colour='XAG.USD')) +
+ theme(legend.title = element_blank()) + xlab('') + ylab('USD')
+```
