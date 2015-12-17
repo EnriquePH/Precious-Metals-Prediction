@@ -22,8 +22,19 @@ shinyUI(fluidPage(
             selectInput('metal_id', 'Metal:', precious_metals),
             selectInput('metal_curr', 'Currency:',
                         currency_list),
-            helpText(textOutput('text.sd')),
-            helpText(textOutput('text.ed')),
+            wellPanel(
+                helpText(textOutput('text.sd')),
+                helpText(textOutput('text.ed'))
+                ),
+            helpText(
+                a("GitHub link",
+                href="https://github.com/EnriquePH/Precious-Metals-Prediction"
+                )),
+            helpText("Author: Enrique Pérez Herrero"),
+            helpText(
+                a("Email: eph.project1500@gmail.com",
+                  href='mailto: eph.project1500@gmail.com')
+            ),
             width = 3
         ),
         mainPanel(tabsetPanel(
