@@ -1,7 +1,7 @@
 Title: Precious Metals Forecast
-Author: Enrique Pérez Herrero
+Author: Enrique P. Herrero <eph.project1500@gmail.com>
 AuthorUrl: https://github.com/EnriquePH
 License: GNU
 DisplayMode: Showcase
-Tags: Arima
+Tags: Arima forecast time series
 Type: Shiny

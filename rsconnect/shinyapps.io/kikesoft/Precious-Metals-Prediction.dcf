@@ -2,8 +2,8 @@ name: Precious-Metals-Prediction
 account: kikesoft
 server: shinyapps.io
 appId: 74226
-bundleId: 334331
+bundleId: 334354
 url: https://kikesoft.shinyapps.io/Precious-Metals-Prediction
-when: 1450390845.64062
+when: 1450392851.21875
 asMultiple: FALSE
 asStatic: FALSE

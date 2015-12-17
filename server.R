@@ -123,5 +123,4 @@ shinyServer(function(input, output) {
     output$table.arima <- renderDataTable({
         forecast.table()
     }, options = list(pageLength = 10))
-    
 })
