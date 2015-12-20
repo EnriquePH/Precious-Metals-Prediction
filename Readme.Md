@@ -1,5 +1,7 @@
 # Precious Metals Price ARIMA Forecast
+
 ## Coursera - Developing Data Products
+
 * Author:  Enrique Pérez Herrero  
 * Date: 20/Dec/2016  
 * [Email](mailto:eph.project1500@gmail.com)  
