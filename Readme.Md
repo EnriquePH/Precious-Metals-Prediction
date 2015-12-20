@@ -7,7 +7,10 @@
 * [App url](https://kikesoft.shinyapps.io/Precious-Metals-Prediction)  
 * [GitHub url](https://github.com/EnriquePH/Precious-Metals-Prediction)
 
-### Description:
+## Description:
 The app downloads the last five years prices from [Oanda](http://www.oanda.com)
 and forecast the next year prices using `auto.arima` function from `forecast` R
 package. 
+
+## Instructions:
+[Project gh-pages](http://enriqueph.github.io/Precious-Metals-Prediction/)
