@@ -29,7 +29,7 @@ Select one of the known as precious metals:
 
 ### Select Currency Input 
 
-One between US Dollars, GB Pound, or Euro can be selected.
+One between US Dollars, British Pound, or Euro can be selected.
 
 ## App Tab Panels
 

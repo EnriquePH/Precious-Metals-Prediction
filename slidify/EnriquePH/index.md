@@ -1,7 +1,7 @@
 ---
 title       : PRECIOUS METALS PRICE FORECAST
 subtitle    : ARIMA time series forecast
-author      : Enrique Pérez Herrero
+author      : Enrique PÃ©rez Herrero
 job         : Mining Engineer
 license     : by-nc-sa
 logo        : logo.png
