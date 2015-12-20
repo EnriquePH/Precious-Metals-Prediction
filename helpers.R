@@ -7,15 +7,16 @@
 #  See licence: https://github.com/EnriquePH/Precious-Metals-Prediction
 #  ----------------------------------------------------------------------------
 
-
 library(quantmod)
 library(ggplot2)
 library(forecast)
 
 # Read metals data from http://www.oanda.com
 
+# Max data from http://www.oanda.com
 max.range <- (5 * 365 - 13)
 
+# Getting the data
 getPreciousMetals <- function(metals, currencies) {
     metal_data <- list()
     for (metal in metals) {
@@ -41,21 +42,20 @@ getPreciousMetals <- function(metals, currencies) {
     return(metal_data)
 }
 
-
 precious_metals <- c(
-    'Gold' = 'XAU',
-    'Silver' = 'XAG',
+    'Gold'      = 'XAU',
+    'Silver'    = 'XAG',
     'Palladium' = 'XPD',
-    'Platinum' = 'XPT'
+    'Platinum'  = 'XPT'
 )
 
-currency_list <- c('US Dollar' = 'USD',
-                   'Euro' = 'EUR',
-                   'Pound Sterling' = 'GBP')
-
+currency_list <- c(
+    'US Dollar'      = 'USD',
+    'Euro'           = 'EUR',
+    'Pound Sterling' = 'GBP'
+)
 
 smooth_method <- c('loess', 'lm')
-
 
 # Arima forecast plot code based on:
 # http://librestats.com/2012/06/11/autoplot-graphical-methods-with-ggplot2/
@@ -93,3 +93,4 @@ arimaForecastPlot <- function(forecast, start, ylabel, ...) {
         ylab(ylabel)
     return(p)
 }
+

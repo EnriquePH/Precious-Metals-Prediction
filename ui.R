@@ -12,7 +12,6 @@ library(shinythemes)
 
 source('helpers.R')
 
-
 shinyUI(fluidPage(
     theme = shinytheme("united"),
     
@@ -26,15 +25,6 @@ shinyUI(fluidPage(
                 helpText(textOutput('text.sd')),
                 helpText(textOutput('text.ed'))
                 ),
-            helpText(
-                a("GitHub link",
-                href="https://github.com/EnriquePH/Precious-Metals-Prediction"
-                )),
-            helpText("Author: Enrique Pérez Herrero"),
-            helpText(
-                a("Email: eph.project1500@gmail.com",
-                  href='mailto: eph.project1500@gmail.com')
-            ),
             width = 3
         ),
         mainPanel(tabsetPanel(

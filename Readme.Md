@@ -1,16 +1,13 @@
 # Precious Metals Price ARIMA Forecast
-
 ## Coursera - Developing Data Products
+* Author:  Enrique Pérez Herrero  
+* Date: 20/Dec/2016  
+* [Email](mailto:eph.project1500@gmail.com)  
+* [GNU GENERAL PUBLIC LICENSE Version 2, June 1991](https://github.com/EnriquePH/Precious-Metals-Prediction)  
+* [App url](https://kikesoft.shinyapps.io/Precious-Metals-Prediction)  
+* [GitHub url](https://github.com/EnriquePH/Precious-Metals-Prediction)
 
-13/Dec/2015
-
-GNU GENERAL PUBLIC LICENSE Version 2, June 1991 
-
-See licence: https://github.com/EnriquePH/Precious-Metals-Prediction 
-
-https://kikesoft.shinyapps.io/Precious-Metals-Prediction
-
-Author:  Enrique Pérez Herrero
-Date: 17/Dec/2016
-email: eph.project1500@gmail.com
-url: https://github.com/EnriquePH/Precious-Metals-Prediction
+### Description:
+The app downloads the last five years prices from [Oanda](http://www.oanda.com)
+and forecast the next year prices using `auto.arima` function from `forecast` R
+package. 

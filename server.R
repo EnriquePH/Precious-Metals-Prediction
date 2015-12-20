@@ -7,7 +7,6 @@
 #  See licence: https://github.com/EnriquePH/Precious-Metals-Prediction
 #  ----------------------------------------------------------------------------
 
-
 source('helpers.R')
 
 metals.df <- getPreciousMetals(precious_metals, currency_list)
@@ -15,10 +14,12 @@ metals.df <- getPreciousMetals(precious_metals, currency_list)
 start.date <- head(metals.df$date, 1)
 end.date <- tail(metals.df$date, 1)
 
+# Forecast interval parameter
 forecast.days <- 365
 
 shinyServer(function(input, output) {
     
+    # Metal Prices plot using ggplot2 
     output$prices.plot <- renderPlot({
         tag <- paste(input$metal_id, input$metal_curr, sep = '.')
         ggplot(data = metals.df , aes_string('date', tag)) +
@@ -29,7 +30,7 @@ shinyServer(function(input, output) {
             xlab('')
         
     })
-    
+    # Forecasted data with auto.arima plot 
     output$prediction.plot <- renderPlot({
         tag <- paste(input$metal_id, input$metal_curr, sep = '.')
         selected.metal <- ts(zoo(metals.df[tag],
@@ -42,7 +43,7 @@ shinyServer(function(input, output) {
         
     })
     
-    
+    # Data first differences plot
     output$diff.plot <- renderPlot({
         tag <- paste(input$metal_id, input$metal_curr, sep = '.')
         selected.metal <-
@@ -75,6 +76,7 @@ shinyServer(function(input, output) {
                end.date <- tail(metals.df$date, 1))
     })
     
+    # ARIMA results from auto.arima
     output$text.arima <- renderPrint({
         tag <- paste(input$metal_id, input$metal_curr, sep = '.')
         selected.metal <- ts(zoo(metals.df[tag],
