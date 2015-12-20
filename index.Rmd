@@ -19,12 +19,12 @@ from [Oanda](http://www.oanda.com) and forecast the next year prices using
 
 Select one of the known as precious metals:
 
-| Metal     | Ticker |
-|-----------|--------|
-| Gold      | XAU    |
-| Silver    | XAG    |
-| Palladium | XPD    |
-| Platinum  | XPT    |
+| Metal     |  Ticker |
+|-----------|---------|
+| Gold      |   XAU   |
+| Silver    |   XAG   |
+| Palladium |   XPD   |
+| Platinum  |   XPT   |
 
 
 ### Select Currency Input 
@@ -87,4 +87,3 @@ Manufacturing Case Study Example
 * [Forecasting: principles and practice](https://www.otexts.org/fpp)
 
 * [OANDA](http://www.oanda.com/)
-
