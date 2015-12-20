@@ -6,6 +6,7 @@
 .RData
 .Rproj.user/
 .Rproj
+rsconnect/
 
 # LaTeX
 *.log
