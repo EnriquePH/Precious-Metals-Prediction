@@ -11,7 +11,7 @@
 
 ## Description:
 The app downloads the last five years prices from [Oanda](http://www.oanda.com)
-and forecast the next year prices using `auto.arima` function from `forecast` R
+and forecast next year prices using `auto.arima` function from `forecast` R
 package. 
 
 ## Instructions:

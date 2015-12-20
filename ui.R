@@ -13,14 +13,13 @@ library(shinythemes)
 source('helpers.R')
 
 shinyUI(fluidPage(
-    theme = shinytheme("united"),
+    theme = shinytheme('united'),
     
-    titlePanel("PRECIOUS METALS PRICE FORECAST"),
+    titlePanel('PRECIOUS METALS PRICE FORECAST'),
     sidebarLayout(
         sidebarPanel(
             selectInput('metal_id', 'Metal:', precious_metals),
-            selectInput('metal_curr', 'Currency:',
-                        currency_list),
+            selectInput('metal_curr', 'Currency:', currency_list),
             wellPanel(
                 helpText(textOutput('text.sd')),
                 helpText(textOutput('text.ed'))
@@ -28,7 +27,7 @@ shinyUI(fluidPage(
             width = 3
         ),
         mainPanel(tabsetPanel(
-            tabPanel("Prices Plot",
+            tabPanel('Prices Plot',
                      radioButtons('method', 'Method:', smooth_method),
                      plotOutput('prices.plot')
             ),
@@ -40,7 +39,8 @@ shinyUI(fluidPage(
                      checkboxInput('chcklog', 'log10', value = TRUE),
                      plotOutput('diff.plot')
                      ),
-            tabPanel('Residuals Plot', plotOutput('residuals.plot'))
+            tabPanel('Residuals Plot', plotOutput('residuals.plot')),
+            tabPanel('Help', includeMarkdown('index.Rmd'))
         ))
     )
 ))
