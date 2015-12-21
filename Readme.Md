@@ -7,6 +7,7 @@
 * [Email](mailto:eph.project1500@gmail.com)  
 * [GNU GENERAL PUBLIC LICENSE Version 2, June 1991](https://github.com/EnriquePH/Precious-Metals-Prediction)  
 * [GitHub url](https://github.com/EnriquePH/Precious-Metals-Prediction)
+* [Slidify url](http://enriqueph.github.io/Precious-Metals-Slidify/)
 
 ## Description:
 The app downloads the last five years prices from [Oanda](http://www.oanda.com)

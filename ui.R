@@ -40,7 +40,7 @@ shinyUI(fluidPage(
                      plotOutput('diff.plot')
                      ),
             tabPanel('Residuals Plot', plotOutput('residuals.plot')),
-            tabPanel('Help', includeMarkdown('index.Rmd'))
+            tabPanel('Help', includeMarkdown('help.Rmd'))
         ))
     )
 ))
