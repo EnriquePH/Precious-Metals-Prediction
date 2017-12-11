@@ -1,4 +1,4 @@
-Package: PRECIOUS METALS PRICE FORECAST
+Package: Precious.metals
 Title: Forecast metals price with Arima
 Version: 1.1
 Authors@R: person("Enrique", "Pérez Herrero",
