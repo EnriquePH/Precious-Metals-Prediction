@@ -17,6 +17,8 @@ The app downloads the last five years prices from [Oanda](http://www.oanda.com)
 and forecast next year prices using `auto.arima` function from `forecast` R
 package. 
 
+![Gold Forecast](https://raw.githubusercontent.com/EnriquePH/Precious-Metals-Prediction/master/img/gold-arima.png)
+
 ## Instructions:
 [Project gh-pages](http://enriqueph.github.io/Precious-Metals-Prediction/)
 
