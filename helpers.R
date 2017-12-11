@@ -7,8 +7,6 @@
 #  ----------------------------------------------------------------------------
 
 library(TTR)
-library(xts)
-library(zoo)
 library(quantmod)
 library(ggplot2)
 library(forecast)
@@ -27,15 +25,14 @@ getPreciousMetals <- function(metals, currencies) {
         for (currency in currencies) {
             num <- paste(metal, currency, sep = '.')
             cat(paste("Loading data:", num, "\n"))
-            #options(download.file.method = "internal")
             metal_data[[num]] <- as.data.frame(
-                getMetals(
-                    metal,
-                    from = Sys.Date() - max.range,
-                    to = Sys.Date(),
-                    base.currency = currency,
-                    auto.assign = FALSE
-                )
+              quantmod::getMetals(
+                metal,
+                from = Sys.Date() - max.range,
+                to = Sys.Date(),
+                base.currency = currency,
+                auto.assign = FALSE
+              )
             )
         }
     }

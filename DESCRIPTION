@@ -5,3 +5,10 @@ License: GNU
 DisplayMode: Showcase
 Tags: Arima forecast time series
 Type: Shiny
+Imports:
+  shiny,
+  shinythemes,
+  quantmod,
+  ggplot2,
+  forecast
+  
