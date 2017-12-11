@@ -15,7 +15,7 @@ start.date <- head(metals.df$date, 1)
 end.date <- tail(metals.df$date, 1)
 
 # Forecast interval parameter
-forecast.days <- 365
+forecast.days <- 90
 
 shinyServer(function(input, output) {
     

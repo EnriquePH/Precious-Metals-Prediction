@@ -7,14 +7,19 @@
 #  See licence: https://github.com/EnriquePH/Precious-Metals-Prediction
 #  ----------------------------------------------------------------------------
 
+library(TTR)
+library(xts)
+library(zoo)
 library(quantmod)
 library(ggplot2)
 library(forecast)
 
+
 # Read metals data from http://www.oanda.com
 
 # Max data from http://www.oanda.com
-max.range <- (5 * 365 - 13)
+# Oanda only provides historical data for the past 180 days
+max.range <- 180
 
 # Getting the data
 getPreciousMetals <- function(metals, currencies) {
@@ -22,7 +27,8 @@ getPreciousMetals <- function(metals, currencies) {
     for (metal in metals) {
         for (currency in currencies) {
             num <- paste(metal, currency, sep = '.')
-            print(num)
+            cat(paste("Loading data:", num, "\n"))
+            #options(download.file.method = "internal")
             metal_data[[num]] <- as.data.frame(
                 getMetals(
                     metal,
