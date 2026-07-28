@@ -1,0 +1,48 @@
+name: R-CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    env:
+      NOT_CRAN: true
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::testthat
+            any::lintr
+          needs: check
+
+      - name: Syntax-check app files
+        run: |
+          Rscript -e 'invisible(sapply(c("helpers.R", "ui.R", "server.R"), function(f) parse(f)))'
+
+      - name: Run tests
+        run: |
+          cd tests
+          Rscript testthat.R
+
+      - name: Lint
+        run: |
+          Rscript -e 'lints <- lintr::lint_dir(".", relative_path = TRUE); print(lints); quit(status = length(lints) > 0)'
+        continue-on-error: true

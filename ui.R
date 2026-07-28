@@ -8,6 +8,7 @@
 
 library(shiny)
 library(shinythemes)
+library(DT)
 
 source('helpers.R')
 
@@ -30,9 +31,9 @@ shinyUI(fluidPage(
                      radioButtons('method', 'Method:', smooth_method),
                      plotOutput('prices.plot')
             ),
-            tabPanel('Prices Table', dataTableOutput('metals.table')),
+            tabPanel('Prices Table', DTOutput('metals.table')),
             tabPanel('Forecast Plot', plotOutput('prediction.plot')),
-            tabPanel('Forecast Table', dataTableOutput('table.arima')),
+            tabPanel('Forecast Table', DTOutput('table.arima')),
             tabPanel('Arima model', verbatimTextOutput('text.arima')),
             tabPanel('Differences Plot',
                      checkboxInput('chcklog', 'log10', value = TRUE),

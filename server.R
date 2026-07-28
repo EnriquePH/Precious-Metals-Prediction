@@ -87,7 +87,7 @@ shinyServer(function(input, output) {
     })
     
     
-    output$metals.table <- renderDataTable(
+    output$metals.table <- renderDT(
         metals.df[, grepl(paste0(input$metal_id, '|date'), names(metals.df))]
     , options = list(pageLength = 10)
     )
@@ -121,7 +121,7 @@ shinyServer(function(input, output) {
         return(pred)
         })
     
-    output$table.arima <- renderDataTable({
+    output$table.arima <- renderDT({
         forecast.table()
     }, options = list(pageLength = 10))
 })
