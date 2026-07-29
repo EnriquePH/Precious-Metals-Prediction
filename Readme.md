@@ -1,5 +1,9 @@
 [![R-CI](https://github.com/EnriquePH/Precious-Metals-Prediction/actions/workflows/r-ci.yml/badge.svg)](https://github.com/EnriquePH/Precious-Metals-Prediction/actions/workflows/r-ci.yml)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![R >= 4.1.0](https://img.shields.io/badge/R-%3E%3D4.1.0-276DC3.svg?logo=r)](https://www.r-project.org/)
+[![Code style: lintr](https://img.shields.io/badge/code%20style-lintr-blue.svg)](https://lintr.r-lib.org/)
+[![Shiny App](https://img.shields.io/badge/shiny-live%20app-blue.svg?logo=rstudio)](https://kikesoft.shinyapps.io/Precious-Metals-Prediction)
+[![Cite this repository](https://img.shields.io/badge/cite-CITATION.cff-informational.svg)](CITATION.cff)
 
 # Precious Metals Price ARIMA Forecast
 
