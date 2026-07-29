@@ -1,3 +1,3 @@
 library(testthat)
 
-test_dir("testthat", reporter = "summary")
+test_dir('testthat', reporter = 'summary')

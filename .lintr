@@ -1,0 +1,9 @@
+linters: linters_with_defaults(
+    indentation_linter = indentation_linter(indent = 4L),
+    quotes_linter = quotes_linter(delimiter = "'"),
+    object_name_linter = object_name_linter(
+      styles = c("dotted.case", "snake_case", "camelCase", "symbols")
+    ),
+    line_length_linter = line_length_linter(100L)
+  )
+exclusions: list("demo")

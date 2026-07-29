@@ -45,6 +45,22 @@ setwd("tests"); source("testthat.R")
 Data-fetch tests hit Oanda's live, undocumented metals feed and are skipped
 automatically when offline or on CRAN (see `tests/testthat/test-data.R`).
 
+## Linting
+
+Code style is enforced with [lintr](https://lintr.r-lib.org/) using the
+rules in [.lintr](.lintr) (the project's own conventions — 4-space indent,
+single-quoted strings — rather than tidyverse defaults). Runs on every push
+via the same CI workflow.
+
+```r
+lintr::lint_dir(".")
+```
+
+Functions in [helpers.R](helpers.R) are documented with
+[roxygen2](https://roxygen2.r-lib.org/)-style comments (`#'`) describing
+parameters and return values, even though this project isn't built as an
+installable package with generated `man/` pages.
+
 ## Data source
 
 Historical prices are pulled at runtime from

@@ -45,4 +45,3 @@ jobs:
       - name: Lint
         run: |
           Rscript -e 'lints <- lintr::lint_dir(".", relative_path = TRUE); print(lints); quit(status = length(lints) > 0)'
-        continue-on-error: true

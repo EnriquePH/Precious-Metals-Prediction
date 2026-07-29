@@ -2,9 +2,13 @@
 #  PRECIOUS METALS PRICE FORECAST
 #  File: ui.R
 #  (c) 2015 - Enrique Pérez Herrero
-#  20/Dec/2015
+#  20/Dec/2015 # nolint: commented_code_linter.
 #  GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 #  ----------------------------------------------------------------------------
+#
+#  Shiny UI: a metal + currency picker feeds a tag like "XAU.USD" (built in
+#  server.R) that selects one column of the wide `metals.df` data frame for
+#  every tab below.
 
 library(shiny)
 library(shinythemes)
@@ -14,7 +18,7 @@ source('helpers.R')
 
 shinyUI(fluidPage(
     theme = shinytheme('united'),
-    
+
     titlePanel('PRECIOUS METALS PRICE FORECAST'),
     sidebarLayout(
         sidebarPanel(
@@ -23,22 +27,22 @@ shinyUI(fluidPage(
             wellPanel(
                 helpText(textOutput('text.sd')),
                 helpText(textOutput('text.ed'))
-                ),
+            ),
             width = 3
         ),
         mainPanel(tabsetPanel(
             tabPanel('Prices Plot',
-                     radioButtons('method', 'Method:', smooth_method),
-                     plotOutput('prices.plot')
+                radioButtons('method', 'Method:', smooth_method),
+                plotOutput('prices.plot')
             ),
             tabPanel('Prices Table', DTOutput('metals.table')),
             tabPanel('Forecast Plot', plotOutput('prediction.plot')),
             tabPanel('Forecast Table', DTOutput('table.arima')),
             tabPanel('Arima model', verbatimTextOutput('text.arima')),
             tabPanel('Differences Plot',
-                     checkboxInput('chcklog', 'log10', value = TRUE),
-                     plotOutput('diff.plot')
-                     ),
+                checkboxInput('chcklog', 'log10', value = TRUE),
+                plotOutput('diff.plot')
+            ),
             tabPanel('Residuals Plot', plotOutput('residuals.plot')),
             tabPanel('Help', includeMarkdown('help.Rmd'))
         ))
