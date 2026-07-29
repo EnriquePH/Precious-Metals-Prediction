@@ -1,20 +1,36 @@
-# EXPLOCAL .gitignore
-# (c) Kikesoft 2015
-
-# R Code 
+# R session / workspace
 .Rhistory
 .RData
-.Rproj.user/
-.Rproj
-rsconnect/
+.Ruserdata
+*.Rout
 
-# LaTeX
+# RStudio
+# (the .Rproj file itself IS tracked; only per-user state is ignored)
+.Rproj.user/
+
+# Shiny / shinyapps.io deployment metadata (account-specific)
+rsconnect/
+rsconnect/documents/*.dcf
+
+# Secrets / local environment overrides
+.Renviron
+.Renviron.local
+.env
+
+# LaTeX (in case of knitr -> PDF output)
 *.log
 *.aux
 *.synctex.gz
 *.blg
 
-# Other
-Readme.html
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Project-specific build artifacts
+README.html
 docs/
-.Rproj.user
