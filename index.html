@@ -1,200 +1,191 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Precious-metals-prediction by EnriquePH</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-dark.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/main.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Precious Metals Price ARIMA Forecast</title>
+<meta name="description" content="An R Shiny app that forecasts gold, silver, palladium, and platinum prices with auto.arima.">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #ffffff;
+    --fg: #1a1a1a;
+    --muted: #5b5b5b;
+    --card: #f6f6f7;
+    --border: #e2e2e2;
+    --accent: #b8860b;
+    --link: #8a5a00;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161a;
+      --fg: #eaeaea;
+      --muted: #a6a6a6;
+      --card: #1d2024;
+      --border: #2c2f34;
+      --accent: #e0b23d;
+      --link: #e0b23d;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+  }
+  main {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 4rem;
+  }
+  h1 {
+    font-size: 1.9rem;
+    margin-bottom: 0.25rem;
+  }
+  .subtitle {
+    color: var(--muted);
+    margin-top: 0;
+    margin-bottom: 1.75rem;
+  }
+  h2 {
+    font-size: 1.2rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1.75rem;
+    margin-top: 2rem;
+  }
+  a { color: var(--link); }
+  .badges { margin-bottom: 1.5rem; }
+  .badges img { margin: 0.15rem 0.25rem 0.15rem 0; vertical-align: middle; }
+  .cta {
+    display: inline-block;
+    padding: 0.6rem 1.1rem;
+    border-radius: 0.4rem;
+    background: var(--accent);
+    color: #1a1200;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .cta:hover { opacity: 0.9; }
+  table {
+    border-collapse: collapse;
+    margin: 1rem 0;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.75rem;
+    text-align: left;
+  }
+  figure {
+    margin: 1rem 0;
+  }
+  figure img {
+    max-width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 0.35rem;
+  }
+  figcaption {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-top: 0.35rem;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+  code {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 0.25rem;
+    padding: 0.1rem 0.35rem;
+    font-size: 0.9em;
+  }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+<main>
 
-  </head>
-  <body>
+  <h1>Precious Metals Price ARIMA Forecast</h1>
+  <p class="subtitle">An R Shiny app that forecasts gold, silver, palladium, and platinum prices with <code>auto.arima</code>.</p>
 
-      <header>
-        <h1>Precious-metals-prediction</h1>
-        <p>Precious Metal Price ARIMA Prediction -  Coursera - Developing Data Products</p>
-      </header>
+  <p class="badges">
+    <img src="https://github.com/EnriquePH/Precious-Metals-Prediction/actions/workflows/r-ci.yml/badge.svg" alt="R-CI status">
+    <img src="https://img.shields.io/badge/License-GPL%20v3-blue.svg" alt="License: GPL v3">
+  </p>
 
-      <div id="banner">
-        <span id="logo"></span>
+  <p>
+    <a class="cta" href="https://kikesoft.shinyapps.io/Precious-Metals-Prediction/">Open the live app &rarr;</a>
+  </p>
 
-        <a href="https://github.com/EnriquePH/Precious-Metals-Prediction" class="button fork"><strong>View On GitHub</strong></a>
-        <div class="downloads">
-          <span>Downloads:</span>
-          <ul>
-            <li><a href="https://github.com/EnriquePH/Precious-Metals-Prediction/zipball/master" class="button">ZIP</a></li>
-            <li><a href="https://github.com/EnriquePH/Precious-Metals-Prediction/tarball/master" class="button">TAR</a></li>
-          </ul>
-        </div>
-      </div><!-- end banner -->
+  <h2>What it does</h2>
+  <p>
+    The app downloads the last 180 days of precious metals prices from
+    <a href="https://www.oanda.com/">Oanda</a> and forecasts the next 90 days
+    using the <code>auto.arima</code> function from the
+    <a href="https://pkg.robjhyndman.com/forecast/">forecast</a> R package.
+    It was originally built for the Coursera &ldquo;Developing Data
+    Products&rdquo; capstone in December 2016, and has since been modernized:
+    current package versions, an automated test suite, CI, and linting.
+  </p>
 
-    <div class="wrapper">
-      <nav>
-        <ul></ul>
-      </nav>
-      <section>
-        <h1>
-<a id="precious-metals-price-arima-forecast" class="anchor" href="#precious-metals-price-arima-forecast" aria-hidden="true"><span class="octicon octicon-link"></span></a>Precious Metals Price ARIMA Forecast</h1>
+  <h2>Metals and currencies</h2>
+  <table>
+    <tr><th>Metal</th><th>Ticker</th></tr>
+    <tr><td>Gold</td><td>XAU</td></tr>
+    <tr><td>Silver</td><td>XAG</td></tr>
+    <tr><td>Palladium</td><td>XPD</td></tr>
+    <tr><td>Platinum</td><td>XPT</td></tr>
+  </table>
+  <p>Prices can be viewed in <strong>US Dollars</strong>, <strong>Euros</strong>, or <strong>Pounds Sterling</strong>.</p>
 
-<h2>
-<a id="coursera---developing-data-products" class="anchor" href="#coursera---developing-data-products" aria-hidden="true"><span class="octicon octicon-link"></span></a>Coursera - Developing Data Products</h2>
+  <h2>App tabs</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Prices Plot</strong> &mdash; price history for the selected metal/currency, with a linear or loess smoother.</li>
+      <li><strong>Prices Table</strong> &mdash; the underlying price data.</li>
+      <li><strong>Forecast Plot</strong> &mdash; the 90-day <a href="https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average">ARIMA</a> forecast, with 80%/90% confidence bands.</li>
+      <li><strong>Forecast Table</strong> &mdash; the forecasted values.</li>
+      <li><strong>Arima model</strong> &mdash; the fitted model chosen by <code>auto.arima</code>.</li>
+      <li><strong>Differences Plot</strong> &mdash; first differences (optionally log10) of the price series.</li>
+      <li><strong>Residuals Plot</strong> &mdash; ACF/PACF of the model residuals.</li>
+    </ul>
+  </div>
 
-<ul>
-<li>Author:  Enrique Pérez Herrero<br>
-</li>
-<li>Date: 20/Dec/2016<br>
-</li>
-<li>
-<a href="mailto:eph.project1500@gmail.com">Email</a><br>
-</li>
-<li>
-<a href="https://github.com/EnriquePH/Precious-Metals-Prediction">GNU GENERAL PUBLIC LICENSE Version 2, June 1991</a><br>
-</li>
-<li>
-<a href="https://kikesoft.shinyapps.io/Precious-Metals-Prediction">App url</a><br>
-</li>
-<li><a href="https://github.com/EnriquePH/Precious-Metals-Prediction">GitHub url</a></li>
-<li><a href="http://enriqueph.github.io/Precious-Metals-Slidify/">Slidify url</a></li>
-</ul>
+  <figure>
+    <img src="img/gold-prices.png" alt="Gold prices plot">
+    <figcaption>Prices Plot &mdash; gold price history</figcaption>
+  </figure>
 
-<h2>
-<a id="description" class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description:</h2>
+  <figure>
+    <img src="img/gold-arima.png" alt="Gold ARIMA forecast plot">
+    <figcaption>Forecast Plot &mdash; ARIMA forecast with confidence bands</figcaption>
+  </figure>
 
-<p>Precious Metals Price ARIMA Forecast App downloads the last five years prices
-from <a href="http://www.oanda.com">Oanda</a> and forecast the next year prices using
-<code>auto.arima</code> function from <code>forecast</code> R package. </p>
+  <h2>Source &amp; citation</h2>
+  <p>
+    Source code, tests, and the CI workflow live on
+    <a href="https://github.com/EnriquePH/Precious-Metals-Prediction">GitHub</a>.
+    See <a href="https://github.com/EnriquePH/Precious-Metals-Prediction/blob/master/CITATION.cff">CITATION.cff</a>
+    for how to cite this software.
+  </p>
 
-<h2>
-<a id="app-side-bar-panel" class="anchor" href="#app-side-bar-panel" aria-hidden="true"><span class="octicon octicon-link"></span></a>App Side Bar Panel</h2>
+  <footer>
+    Enrique P&eacute;rez Herrero &middot;
+    <a href="mailto:eph.project1500@gmail.com">eph.project1500@gmail.com</a> &middot;
+    <a href="LICENSE">GPL v3</a>
+  </footer>
 
-<h3>
-<a id="select-metal-input" class="anchor" href="#select-metal-input" aria-hidden="true"><span class="octicon octicon-link"></span></a>Select Metal Input</h3>
-
-<p>Select one of the known as precious metals:</p>
-
-<table>
-<thead>
-<tr>
-<th>Metal</th>
-<th>Ticker</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Gold</td>
-<td>XAU</td>
-</tr>
-<tr>
-<td>Silver</td>
-<td>XAG</td>
-</tr>
-<tr>
-<td>Palladium</td>
-<td>XPD</td>
-</tr>
-<tr>
-<td>Platinum</td>
-<td>XPT</td>
-</tr>
-</tbody>
-</table>
-
-<h3>
-<a id="select-currency-input" class="anchor" href="#select-currency-input" aria-hidden="true"><span class="octicon octicon-link"></span></a>Select Currency Input</h3>
-
-<p>One between US Dollars, British Pound, or Euro can be selected.</p>
-
-<h2>
-<a id="app-tab-panels" class="anchor" href="#app-tab-panels" aria-hidden="true"><span class="octicon octicon-link"></span></a>App Tab Panels</h2>
-
-<p>App Tab panels are located above and can be selected like a menu.</p>
-
-<h3>
-<a id="--prices-plot" class="anchor" href="#--prices-plot" aria-hidden="true"><span class="octicon octicon-link"></span></a>- Prices Plot</h3>
-
-<p>Shows a price plot for the selected metal and currency, and a control to change
-adjusted statistics: <code>linear</code> or <code>loess</code> </p>
-
-<p><img src="img/gold-prices.png" alt="Gold prices plot"></p>
-
-<h3>
-<a id="--prices-table" class="anchor" href="#--prices-table" aria-hidden="true"><span class="octicon octicon-link"></span></a>- Prices Table</h3>
-
-<p>Shows the price table data for the selected metal and several currencies</p>
-
-<h3>
-<a id="--forecast-plot" class="anchor" href="#--forecast-plot" aria-hidden="true"><span class="octicon octicon-link"></span></a>- Forecast Plot</h3>
-
-<p>Shows the 
-<a href="https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average">ARIMA</a>
-forecast for the next 365 days as a blue line, 80% confidence interval is 
-displayed in orange, while 90% is in yellow.</p>
-
-<p><img src="img/gold-arima.png" alt="Gold ARIMA plot"></p>
-
-<h3>
-<a id="--forecast-table" class="anchor" href="#--forecast-table" aria-hidden="true"><span class="octicon octicon-link"></span></a>- Forecast Table</h3>
-
-<p>Displays forecasted data table</p>
-
-<h3>
-<a id="--arima-model" class="anchor" href="#--arima-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>- Arima model</h3>
-
-<p>Shows adjusted model using <code>auto.arima</code> from the <code>forecast</code> package</p>
-
-<h3>
-<a id="--differences-plot" class="anchor" href="#--differences-plot" aria-hidden="true"><span class="octicon octicon-link"></span></a>- Differences Plot</h3>
-
-<p>Plots first differences for the selected metal price and the differences of
-base 10 logarithm of data </p>
-
-<h3>
-<a id="--residuals-plot" class="anchor" href="#--residuals-plot" aria-hidden="true"><span class="octicon octicon-link"></span></a>- Residuals Plot</h3>
-
-<p>Plots the ACF and the
-<a href="https://en.wikipedia.org/wiki/Partial_autocorrelation_function">PACF</a></p>
-
-<h2>
-<a id="links" class="anchor" href="#links" aria-hidden="true"><span class="octicon octicon-link"></span></a>Links</h2>
-
-<ul>
-<li><a href="http://librestats.com/2012/06/11/autoplot-graphical-methods-with-ggplot2/">Autoplot: Graphical Methods with ggplot2</a></li>
-<li><a href="http://businessforecastblog.com/more-blackbox-analysis-arima-modeling-in-r/">More blackbox analysis - Arima modeling in R</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Precious_metal">Precious Metals - Wikipedia</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Palladium_as_an_investment">Palladium as an investment - Wikipedia</a></li>
-<li>Step-by-Step Graphic Guide to Forecasting through ARIMA Modeling in R,
-Manufacturing Case Study Example 
-<a href="http://ucanalytics.com/blogs/step-by-step-graphic-guide-to-forecasting-through-arima-modeling-in-r-manufacturing-case-study-example/">(Part 4)</a>
-</li>
-<li>Automatic Time Series Forecasting: The forecast Package for R<br>
-<a href="http://www.jstatsoft.org/article/view/v027i03">Journal of Statistical Software July 2008, Volume 27, Issue 3.</a>
-</li>
-<li><a href="https://www.otexts.org/fpp">Forecasting: principles and practice</a></li>
-<li><a href="http://www.oanda.com/">OANDA</a></li>
-</ul>
-      </section>
-      <footer>
-        <p>Project maintained by <a href="https://github.com/EnriquePH">EnriquePH</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
-      </footer>
-    </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-              <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-12106388-7");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
-
-  </body>
+</main>
+</body>
 </html>
