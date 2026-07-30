@@ -36,8 +36,16 @@ install.packages(c(
   "shiny", "shinythemes", "DT", "markdown",
   "TTR", "quantmod", "ggplot2", "forecast", "zoo"
 ))
-shiny::runApp(".")
 ```
+
+```sh
+Rscript run.R
+# or: SHINY_PORT=8080 SHINY_HOST=0.0.0.0 Rscript run.R
+```
+
+`run.R` just calls `shiny::runApp(".")` under the hood; port/host default to
+`3838`/`127.0.0.1` and are overridable via the `SHINY_PORT`/`SHINY_HOST` env
+vars. Equivalent from an R console: `shiny::runApp(".")`.
 
 ## Testing
 
