@@ -4,7 +4,7 @@
 [![Code style: lintr](https://img.shields.io/badge/code%20style-lintr-blue.svg)](https://lintr.r-lib.org/)
 [![Shiny App](https://img.shields.io/badge/shiny-live%20app-blue.svg?logo=rstudio)](https://kikesoft.shinyapps.io/Precious-Metals-Prediction)
 [![Cite this repository](https://img.shields.io/badge/cite-CITATION.cff-informational.svg)](CITATION.cff)
-[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/EnriquePH/Precious-Metals-Prediction/releases)
+[![Version](	.2.0-blue.svg)](https://github.com/EnriquePH/Precious-Metals-Prediction/releases)
 [![Releases](https://img.shields.io/github/v/release/EnriquePH/Precious-Metals-Prediction)](https://github.com/EnriquePH/Precious-Metals-Prediction/releases)
 [![Issues](https://img.shields.io/github/issues/EnriquePH/Precious-Metals-Prediction)](https://github.com/EnriquePH/Precious-Metals-Prediction/issues)
 [![Last commit](https://img.shields.io/github/last-commit/EnriquePH/Precious-Metals-Prediction)](https://github.com/EnriquePH/Precious-Metals-Prediction/commits)
