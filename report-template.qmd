@@ -1,0 +1,106 @@
+---
+title: "Precious Metals Report"
+subtitle: "`r params$currency` — price history, ARIMA forecast, and diagnostics for every tracked metal"
+date: today
+format:
+  pdf:
+    toc: true
+    number-sections: false
+params:
+  currency: "USD"
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup}
+#| include: false
+source('helpers.R')
+
+metals.df <- getPreciousMetals(precious_metals, params$currency)
+start.date <- head(metals.df$date, 1)
+end.date <- tail(metals.df$date, 1)
+forecast.days <- 90
+
+# package version from DESCRIPTION for report footer/cover
+pkg_version <- tryCatch(as.character(read.dcf('DESCRIPTION', fields = 'Version')[1]), error = function(e) NA)
+```
+
+Data: last `r nrow(metals.df)` days from Oanda, `r format(start.date)` to
+`r format(end.date)`. Forecasts use `auto.arima()` over a `r forecast.days`-day
+horizon.
+
+--
+
+## Executive summary {.unnumbered}
+
+Report version: `r pkg_version`  
+Generated: `r format(Sys.time(), "%Y-%m-%d %H:%M %Z")`
+
+Below is a concise summary of the most recent prices and simple statistics
+for each metal (last observed price, mean and sd over the last 30 days).
+
+```{r summary-table}
+summaries <- lapply(names(precious_metals), function(mn) {
+  tag <- paste(precious_metals[[mn]], params$currency, sep='.')
+  vals <- tail(na.omit(metals.df[[tag]]), 30)
+  data.frame(
+    Metal = mn,
+    Ticker = tag,
+    LastPrice = ifelse(length(vals) > 0, round(tail(vals, 1), 2), NA),
+    Mean30 = ifelse(length(vals) > 0, round(mean(vals), 2), NA),
+    SD30 = ifelse(length(vals) > 0, round(sd(vals), 2), NA)
+  )
+})
+summaries <- do.call(rbind, summaries)
+print(knitr::kable(summaries, digits = 2))
+```
+
+```{r sections}
+#| output: asis
+metal_section <- function(metal) {
+    tag <- paste(metal, params$currency, sep = '.')
+    metal_name <- names(precious_metals)[precious_metals == metal]
+
+    arima.fit <- auto.arima(tsColumn(metals.df, tag), approximation = FALSE, trace = FALSE)
+    pred <- forecast(arima.fit, h = forecast.days)
+    pred.df <- as.data.frame(pred)
+    pred.df <- cbind(
+        date = seq(end.date + 1, end.date + forecast.days, by = '1 day'),
+        pred.df
+    )
+    names(pred.df) <- c('date', 'forecast', 'lo80', 'hi80', 'lo95', 'hi95')
+
+    cat('\n\n## ', metal_name, ' (', tag, ')\n\n', sep = '')
+
+    cat('\n\n### Price History\n\n')
+    print(metalsPricePlot(metals.df, tag))
+
+    cat('\n\n### Price Table (last 10 days)\n\n')
+    print(knitr::kable(tail(metals.df[, c('date', tag)], 10), row.names = FALSE, digits = 2))
+
+    cat('\n\n### ARIMA Forecast\n\n')
+    print(arimaForecastPlot(pred, start = start.date, ylabel = tag))
+
+    cat('\n\n### Forecast Table (first 10 days)\n\n')
+    print(knitr::kable(head(pred.df, 10), row.names = FALSE, digits = 2))
+
+    cat('\n\n### ARIMA Model\n\n')
+    cat('\n```\n', paste(capture.output(summary(arima.fit)), collapse = '\n'), '\n```\n\n', sep = '')
+
+    cat('\n\n### Differences Plot (log10)\n\n')
+    print(metalsDiffPlot(metals.df, tag, start.date, end.date, log10 = TRUE))
+
+    cat('\n\n### Residuals Plot\n\n')
+    acf.plot <- ggAcf(ts(arima.fit$residuals), color = metals_palette[['ink']]) +
+        ggtitle('ACF Residual') + theme_metals()
+    pacf.plot <- ggPacf(ts(arima.fit$residuals), color = metals_palette[['ink']]) +
+        ggtitle('PACF Residual') + theme_metals()
+    print(acf.plot + pacf.plot)
+
+    cat('\n\n\\newpage\n\n')
+}
+
+invisible(lapply(precious_metals, metal_section))
+```

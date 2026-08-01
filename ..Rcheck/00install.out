@@ -1,0 +1,14 @@
+* installing *source* package ‘Precious.metals’ ...
+** this is package ‘Precious.metals’ version ‘1.2.0’
+** using staged installation
+** R
+** demo
+** byte-compile and prepare package for lazy loading
+** help
+No man pages found in package  ‘Precious.metals’ 
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded from temporary location
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (Precious.metals)

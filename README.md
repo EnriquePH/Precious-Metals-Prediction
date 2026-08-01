@@ -4,6 +4,10 @@
 [![Code style: lintr](https://img.shields.io/badge/code%20style-lintr-blue.svg)](https://lintr.r-lib.org/)
 [![Shiny App](https://img.shields.io/badge/shiny-live%20app-blue.svg?logo=rstudio)](https://kikesoft.shinyapps.io/Precious-Metals-Prediction)
 [![Cite this repository](https://img.shields.io/badge/cite-CITATION.cff-informational.svg)](CITATION.cff)
+[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/EnriquePH/Precious-Metals-Prediction/releases)
+[![Releases](https://img.shields.io/github/v/release/EnriquePH/Precious-Metals-Prediction)](https://github.com/EnriquePH/Precious-Metals-Prediction/releases)
+[![Issues](https://img.shields.io/github/issues/EnriquePH/Precious-Metals-Prediction)](https://github.com/EnriquePH/Precious-Metals-Prediction/issues)
+[![Last commit](https://img.shields.io/github/last-commit/EnriquePH/Precious-Metals-Prediction)](https://github.com/EnriquePH/Precious-Metals-Prediction/commits)
 
 # Precious Metals Price ARIMA Forecast
 
@@ -21,6 +25,18 @@ The app downloads the last 180 days of prices from [Oanda](http://www.oanda.com)
 and forecasts the next 90 days using the `auto.arima` function from the
 `forecast` R package.
 
+All plots share one visual language (`theme_metals()` in
+[helpers.R](helpers.R)): dark ink for observed history, a single blue hue for
+model output, and — since the forecast's 80%/90% confidence bands are a
+magnitude encoding, not two unrelated categories — two steps of that *same*
+hue (darker/narrower = 80%, lighter/wider = 90%), with a legend identifying
+all four elements.
+
+Those `ggplot2` objects are the single source of truth for every plot: in
+the running app they're wrapped with `plotly::ggplotly()` for interactive,
+zoomable charts, while the same objects are used unwrapped to render the
+static PNG/PDF report images (like the one below).
+
 ![Gold Forecast](https://raw.githubusercontent.com/EnriquePH/Precious-Metals-Prediction/master/img/gold-arima.png)
 
 ## Instructions:
@@ -34,7 +50,7 @@ and forecasts the next 90 days using the `auto.arima` function from the
 ```r
 install.packages(c(
   "shiny", "shinythemes", "DT", "markdown",
-  "TTR", "quantmod", "ggplot2", "forecast", "zoo"
+  "TTR", "quantmod", "ggplot2", "plotly", "patchwork", "forecast", "zoo"
 ))
 ```
 
@@ -46,6 +62,36 @@ Rscript run.R
 `run.R` just calls `shiny::runApp(".")` under the hood; port/host default to
 `3838`/`127.0.0.1` and are overridable via the `SHINY_PORT`/`SHINY_HOST` env
 vars. Equivalent from an R console: `shiny::runApp(".")`.
+
+## PDF reports
+
+Requires the [Quarto CLI](https://quarto.org/docs/get-started/) and the R
+`quarto` and `knitr` packages, plus a LaTeX install (e.g. via
+`tinytex::install_tinytex()`) for PDF rendering.
+
+```sh
+Rscript report_usd.R   # reports/metals-report-usd.pdf
+Rscript report_eur.R   # reports/metals-report-eur.pdf
+```
+
+Both scripts render [report-template.qmd](report-template.qmd) — a
+`quarto::quarto_render()` call parameterized with `currency` — into a
+one-section-per-metal PDF covering every metal in
+[`precious_metals`](helpers.R) for that currency, mirroring every tab of the
+Shiny app: price history, price table, ARIMA forecast plot and table, the
+ARIMA model summary, the (log10) differences plot, and the ACF/PACF
+residuals plot. It reuses the exact same `ggplot2` objects the app plots
+(via `metalsPricePlot()`, `metalsDiffPlot()`, and `arimaForecastPlot()` in
+[helpers.R](helpers.R)) — unwrapped, unlike the app's `plotly`-wrapped
+versions, since static PDF has no interactive layer; the ACF/PACF pair is
+combined into one static figure with `patchwork` instead of `plotly::subplot()`.
+Output path is overridable via the `REPORT_FILE` env var; the output
+directory (`reports/` by default, gitignored) is created if missing.
+
+The report's Forecast Table includes the ARIMA point-forecast column; the
+app's own "Forecast Table" tab currently omits it (a pre-existing
+`pred[-1]` indexing quirk in [server.R](server.R), left as-is here since
+fixing it wasn't in scope).
 
 ## Testing
 
@@ -93,3 +139,7 @@ methodology references below.
   Framework*. [CRAN](https://CRAN.R-project.org/package=quantmod)
 * OANDA Corporation. Historical precious metals price data.
   [oanda.com](https://www.oanda.com/)
+ 
+## Contributing
+
+Si quieres contribuir, lee la guía en [CONTRIBUTING.md](CONTRIBUTING.md) para instrucciones sobre reportes de bugs, propuestas de mejoras y normas para pull requests.

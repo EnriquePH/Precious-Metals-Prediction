@@ -34,3 +34,9 @@ Thumbs.db
 # Project-specific build artifacts
 README.html
 docs/
+
+# Generated PDF reports (report_usd.R / report_eur.R) and Quarto build state
+reports/
+/.quarto/
+report-template.pdf
+report-template_files/

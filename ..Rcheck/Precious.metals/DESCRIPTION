@@ -1,0 +1,20 @@
+Package: Precious.metals
+Title: Forecast Precious Metals Prices with ARIMA
+Version: 1.2.0
+Authors@R: person("Enrique", "Pérez Herrero",
+                  email = "eph.project1500@gmail.com",
+                  role = c("aut", "cre"))
+Author: Enrique Pérez Herrero [aut, cre]
+Maintainer: Enrique Pérez Herrero <eph.project1500@gmail.com>
+Description: A Shiny application that downloads the last 180 days of gold,
+    silver, palladium, and platinum prices from Oanda and forecasts the next
+    90 days using the auto.arima() function from the forecast package.
+Depends: R (>= 4.1.0)
+License: file LICENSE
+LazyData: true
+Imports: shiny, shinythemes, DT, markdown, TTR, quantmod, ggplot2,
+        plotly, patchwork, forecast, zoo
+Suggests: testthat (>= 3.0.0), quarto, knitr
+Config/testthat/edition: 3
+Encoding: UTF-8
+Built: R 4.5.2; ; 2026-08-01 05:27:05 UTC; unix

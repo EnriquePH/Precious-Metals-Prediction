@@ -1,0 +1,45 @@
+name: Update README version badge
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'DESCRIPTION'
+      - 'README.md'
+
+jobs:
+  update-badge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract version from DESCRIPTION
+        id: extract
+        run: |
+          ver=$(grep '^Version:' DESCRIPTION | sed 's/Version:[[:space:]]*//')
+          echo "version=$ver" >> "$GITHUB_OUTPUT"
+
+      - name: Update README badge
+        env:
+          VERSION: ${{ steps.extract.outputs.version }}
+        run: |
+          # Replace the img.shields.io version badge value (keep rest of URL)
+          if grep -q "img.shields.io/badge/version-" README.md; then
+            perl -0777 -pe "s|(https://img.shields.io/badge/version-)[^\)]+|\1${VERSION}-blue.svg|g" -i README.md
+            git add README.md || true
+          else
+            echo "No version badge found; skipping update"
+          fi
+
+      - name: Commit and push if changed
+        run: |
+          if git diff --staged --quiet; then
+            echo "No README changes to commit"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "ci: update README version badge to ${VERSION}"
+            git push
+          fi

@@ -24,49 +24,27 @@ forecast.days <- 90
 
 shinyServer(function(input, output) {
 
-    # Metal Prices plot using ggplot2
-    output$prices.plot <- renderPlot({
+    # Metal Prices plot: built with ggplot2 (same code path used for the
+    # static PDF/PNG report), rendered interactively via plotly.
+    output$prices.plot <- renderPlotly({
         tag <- paste(input$metal_id, input$metal_curr, sep = '.')
-        ggplot(data = metals.df, aes(.data$date, .data[[tag]])) +
-            geom_line() +
-            stat_smooth(
-                method = input$method, formula = y ~ x, size = 1
-            ) +
-            xlab('')
+        ggplotly(metalsPricePlot(metals.df, tag, input$method))
     })
 
     # Forecasted data with auto.arima plot
-    output$prediction.plot <- renderPlot({
+    output$prediction.plot <- renderPlotly({
         tag <- paste(input$metal_id, input$metal_curr, sep = '.')
-        selected.metal <- ts(zoo(metals.df[tag],
-                                 order.by = metals.df$date))
-        arima.fit <- auto.arima(selected.metal,
+        arima.fit <- auto.arima(tsColumn(metals.df, tag),
                                 approximation = FALSE,
                                 trace = FALSE)
         pred <- forecast(arima.fit, h = forecast.days)
-        arimaForecastPlot(pred, start = start.date, ylabel = tag)
+        ggplotly(arimaForecastPlot(pred, start = start.date, ylabel = tag))
     })
 
     # Data first differences plot
-    output$diff.plot <- renderPlot({
+    output$diff.plot <- renderPlotly({
         tag <- paste(input$metal_id, input$metal_curr, sep = '.')
-        selected.metal <-
-            ts(zoo(metals.df[tag], order.by = metals.df$date))
-
-        if (input$chcklog) {
-            selected.metal <- diff(log10(selected.metal))
-        } else {
-            selected.metal <- diff(selected.metal)
-        }
-
-        diff.df <- data.frame(
-            date = seq(from = start.date + 1, to = end.date, by = '1 day'),
-            price = selected.metal
-        )
-
-        ggplot(data = diff.df, aes(.data$date, .data[[tag]])) +
-            geom_line() +
-            xlab('')
+        ggplotly(metalsDiffPlot(metals.df, tag, start.date, end.date, log10 = input$chcklog))
     })
 
     output$text.sd <- renderText({
@@ -82,9 +60,7 @@ shinyServer(function(input, output) {
     # ARIMA results from auto.arima
     output$text.arima <- renderPrint({
         tag <- paste(input$metal_id, input$metal_curr, sep = '.')
-        selected.metal <- ts(zoo(metals.df[tag],
-                                 order.by = metals.df$date))
-        arima.fit <- auto.arima(selected.metal,
+        arima.fit <- auto.arima(tsColumn(metals.df, tag),
                                 approximation = FALSE,
                                 trace = FALSE)
         summary(arima.fit)
@@ -95,23 +71,24 @@ shinyServer(function(input, output) {
         options = list(pageLength = 10)
     )
 
-    output$residuals.plot <- renderPlot({
+    output$residuals.plot <- renderPlotly({
         tag <- paste(input$metal_id, input$metal_curr, sep = '.')
-        selected.metal <- ts(zoo(metals.df[tag],
-                                 order.by = metals.df$date))
-        arima.fit <- auto.arima(selected.metal,
+        arima.fit <- auto.arima(tsColumn(metals.df, tag),
                                 approximation = FALSE,
                                 trace = FALSE)
-        par(mfrow = c(1, 2))
-        acf(ts(arima.fit$residuals), main = 'ACF Residual')
-        pacf(ts(arima.fit$residuals), main = 'PACF Residual')
+        residuals <- ts(arima.fit$residuals)
+        acf.plot <- ggAcf(residuals, color = metals_palette[['ink']]) +
+            ggtitle('ACF Residual') +
+            theme_metals()
+        pacf.plot <- ggPacf(residuals, color = metals_palette[['ink']]) +
+            ggtitle('PACF Residual') +
+            theme_metals()
+        subplot(ggplotly(acf.plot), ggplotly(pacf.plot), nrows = 1, titleX = TRUE, titleY = TRUE)
     })
 
     forecast.table <- reactive({
         tag <- paste(input$metal_id, input$metal_curr, sep = '.')
-        selected.metal <- ts(zoo(metals.df[tag],
-                                 order.by = metals.df$date))
-        arima.fit <- auto.arima(selected.metal,
+        arima.fit <- auto.arima(tsColumn(metals.df, tag),
                                 approximation = FALSE,
                                 trace = FALSE)
         pred <- forecast(arima.fit, h = forecast.days)

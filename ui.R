@@ -33,17 +33,17 @@ shinyUI(fluidPage(
         mainPanel(tabsetPanel(
             tabPanel('Prices Plot',
                 radioButtons('method', 'Method:', smooth_method),
-                plotOutput('prices.plot')
+                plotlyOutput('prices.plot')
             ),
             tabPanel('Prices Table', DTOutput('metals.table')),
-            tabPanel('Forecast Plot', plotOutput('prediction.plot')),
+            tabPanel('Forecast Plot', plotlyOutput('prediction.plot')),
             tabPanel('Forecast Table', DTOutput('table.arima')),
             tabPanel('Arima model', verbatimTextOutput('text.arima')),
             tabPanel('Differences Plot',
                 checkboxInput('chcklog', 'log10', value = TRUE),
-                plotOutput('diff.plot')
+                plotlyOutput('diff.plot')
             ),
-            tabPanel('Residuals Plot', plotOutput('residuals.plot')),
+            tabPanel('Residuals Plot', plotlyOutput('residuals.plot')),
             tabPanel('Help', includeMarkdown('help.Rmd'))
         ))
     )
