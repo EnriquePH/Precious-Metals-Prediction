@@ -13,6 +13,7 @@
 library(shiny)
 library(shinythemes)
 library(DT)
+library(markdown)  # used by includeMarkdown(); also tells rsconnect to install it
 
 source('helpers.R')
 
