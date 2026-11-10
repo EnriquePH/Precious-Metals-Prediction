@@ -22,6 +22,24 @@ machine-readable.
 ### Removed
 - 
 
+## [1.3.0] - 2026-11-10
+### Changed
+- Prices now come from Yahoo Finance (COMEX/NYMEX front-month futures `GC=F`,
+  `SI=F`, `PL=F`, `PA=F`, in USD per troy ounce), converted to EUR and GBP
+  with each day's `EURUSD=X` / `GBPUSD=X` rate. Oanda no longer serves metal
+  prices to `quantmod::getMetals()`, so the app could not load any data.
+- Three years of history instead of 180 days.
+- Forecast horizons, the forecast table and the differences plot are dated
+  with trading days (`nextTradingDays()`); the data has no weekends.
+
+### Fixed
+- The wide forecast band is the 95 % interval (the `forecast()` default), not
+  90 % as the legend and the help said.
+
+### Added
+- Tests for the currency conversion, `nextTradingDays()` and trading-day
+  dates in `arimaForecastPlot(dates = )`.
+
 ## [1.2.0] - YYYY-MM-DD
 ### Added
 - Initial release notes placeholder.

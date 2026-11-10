@@ -9,9 +9,11 @@
 * [Slidify url](http://enriqueph.github.io/Precious-Metals-Slidify/)
 
 ## Description:
-Precious Metals Price ARIMA Forecast App downloads the last 180 days prices
-from [Oanda](http://www.oanda.com) and forecast the next 90 days prices using
-`auto.arima` function from `forecast` R package.
+Precious Metals Price ARIMA Forecast App downloads the last three years of
+daily prices of the COMEX/NYMEX front-month futures from
+[Yahoo Finance](https://finance.yahoo.com) and forecasts the next 90 trading
+days using the `auto.arima` function from the `forecast` R package. Euro and
+pound prices use each day's exchange rate.
 
 
 ## App Side Bar Panel
@@ -48,8 +50,8 @@ Shows the price table data for the selected metal and several currencies
 ### - Forecast Plot  
 Shows the
 [ARIMA](https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average)
-forecast for the next 90 days as a blue line, 80% confidence interval is
-displayed in orange, while 90% is in yellow.
+forecast for the next 90 trading days as a blue line; the 80% confidence
+interval is the darker blue band and the 95% interval the lighter one.
 
 ![Gold ARIMA plot](img/gold-arima.png)
 
@@ -80,4 +82,5 @@ Manufacturing Case Study Example
 * Automatic Time Series Forecasting: The forecast Package for R  
 [Journal of Statistical Software July 2008, Volume 27, Issue 3.](http://www.jstatsoft.org/article/view/v027i03)
 * [Forecasting: principles and practice](https://www.otexts.org/fpp)
-* [OANDA](http://www.oanda.com/)
+* [Yahoo Finance](https://finance.yahoo.com) (data) and
+  [CME Group metals futures](https://www.cmegroup.com/markets/metals.html)

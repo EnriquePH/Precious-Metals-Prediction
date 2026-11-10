@@ -4,7 +4,7 @@
 [![Code style: lintr](https://img.shields.io/badge/code%20style-lintr-blue.svg)](https://lintr.r-lib.org/)
 [![Shiny App](https://img.shields.io/badge/shiny-live%20app-blue.svg?logo=rstudio)](https://kikesoft.shinyapps.io/Precious-Metals-Prediction)
 [![Cite this repository](https://img.shields.io/badge/cite-CITATION.cff-informational.svg)](CITATION.cff)
-[![Version](	.2.0-blue.svg)](https://github.com/EnriquePH/Precious-Metals-Prediction/releases)
+[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](https://github.com/EnriquePH/Precious-Metals-Prediction/releases)
 [![Releases](https://img.shields.io/github/v/release/EnriquePH/Precious-Metals-Prediction)](https://github.com/EnriquePH/Precious-Metals-Prediction/releases)
 [![Issues](https://img.shields.io/github/issues/EnriquePH/Precious-Metals-Prediction)](https://github.com/EnriquePH/Precious-Metals-Prediction/issues)
 [![Last commit](https://img.shields.io/github/last-commit/EnriquePH/Precious-Metals-Prediction)](https://github.com/EnriquePH/Precious-Metals-Prediction/commits)
@@ -21,15 +21,16 @@
 * [Slidify url](http://enriqueph.github.io/Precious-Metals-Slidify/)
 
 ## Description:
-The app downloads the last 180 days of prices from [Oanda](http://www.oanda.com)
-and forecasts the next 90 days using the `auto.arima` function from the
-`forecast` R package.
+The app downloads the last three years of daily prices of the COMEX/NYMEX
+front-month futures from [Yahoo Finance](https://finance.yahoo.com) (in USD,
+converted to EUR and GBP with each day's exchange rate) and forecasts the next
+90 trading days using the `auto.arima` function from the `forecast` R package.
 
 All plots share one visual language (`theme_metals()` in
 [helpers.R](helpers.R)): dark ink for observed history, a single blue hue for
-model output, and — since the forecast's 80%/90% confidence bands are a
+model output, and — since the forecast's 80%/95% confidence bands are a
 magnitude encoding, not two unrelated categories — two steps of that *same*
-hue (darker/narrower = 80%, lighter/wider = 90%), with a legend identifying
+hue (darker/narrower = 80%, lighter/wider = 95%), with a legend identifying
 all four elements.
 
 Those `ggplot2` objects are the single source of truth for every plot: in
@@ -100,8 +101,8 @@ fixing it wasn't in scope).
 setwd("tests"); source("testthat.R")
 ```
 
-Data-fetch tests hit Oanda's live, undocumented metals feed and are skipped
-automatically when offline or on CRAN (see `tests/testthat/test-data.R`).
+Data-fetch tests hit Yahoo Finance and are skipped automatically when offline
+or on CRAN (see `tests/testthat/test-data.R`).
 
 ## Linting
 
@@ -122,10 +123,17 @@ installable package with generated `man/` pages.
 ## Data source
 
 Historical prices are pulled at runtime from
-[Oanda](http://www.oanda.com) via `quantmod::getMetals()`. This is an
-unofficial, unversioned public endpoint with no published SLA — if Oanda
-changes or retires it, `getPreciousMetals()` in [helpers.R](helpers.R) is
-the place to point at a replacement feed.
+[Yahoo Finance](https://finance.yahoo.com) via `quantmod::getSymbols()`: the
+front-month futures `GC=F` (gold), `SI=F` (silver), `PL=F` (platinum) and
+`PA=F` (palladium), in USD per troy ounce, and the `EURUSD=X` and `GBPUSD=X`
+exchange rates. Only trading days are returned, so forecast horizons are dated
+with weekdays.
+
+Until 2026 the app used [Oanda](https://www.oanda.com) through
+`quantmod::getMetals()`, which no longer serves metal prices. Yahoo Finance is
+also an unofficial endpoint with no published SLA: if it changes,
+`getPreciousMetals()` in [helpers.R](helpers.R) is the place to point at a
+replacement feed.
 
 ## Citation
 
@@ -137,8 +145,8 @@ methodology references below.
   [doi:10.18637/jss.v027.i03](https://doi.org/10.18637/jss.v027.i03)
 * Ryan, J.A., & Ulrich, J.M. *quantmod: Quantitative Financial Modelling
   Framework*. [CRAN](https://CRAN.R-project.org/package=quantmod)
-* OANDA Corporation. Historical precious metals price data.
-  [oanda.com](https://www.oanda.com/)
+* Yahoo Finance. COMEX/NYMEX metals futures and exchange rates.
+  [finance.yahoo.com](https://finance.yahoo.com)
  
 ## Contributing
 

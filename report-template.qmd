@@ -27,7 +27,7 @@ forecast.days <- 90
 pkg_version <- tryCatch(as.character(read.dcf('DESCRIPTION', fields = 'Version')[1]), error = function(e) NA)
 ```
 
-Data: last `r nrow(metals.df)` days from Oanda, `r format(start.date)` to
+Data: last `r nrow(metals.df)` trading days of COMEX/NYMEX futures from Yahoo Finance, `r format(start.date)` to
 `r format(end.date)`. Forecasts use `auto.arima()` over a `r forecast.days`-day
 horizon.
 
@@ -67,7 +67,7 @@ metal_section <- function(metal) {
     pred <- forecast(arima.fit, h = forecast.days)
     pred.df <- as.data.frame(pred)
     pred.df <- cbind(
-        date = seq(end.date + 1, end.date + forecast.days, by = '1 day'),
+        date = nextTradingDays(end.date, forecast.days),
         pred.df
     )
     names(pred.df) <- c('date', 'forecast', 'lo80', 'hi80', 'lo95', 'hi95')
@@ -81,7 +81,7 @@ metal_section <- function(metal) {
     print(knitr::kable(tail(metals.df[, c('date', tag)], 10), row.names = FALSE, digits = 2))
 
     cat('\n\n### ARIMA Forecast\n\n')
-    print(arimaForecastPlot(pred, start = start.date, ylabel = tag))
+    print(arimaForecastPlot(pred, start = start.date, ylabel = tag, dates = metals.df$date))
 
     cat('\n\n### Forecast Table (first 10 days)\n\n')
     print(knitr::kable(head(pred.df, 10), row.names = FALSE, digits = 2))

@@ -6,7 +6,7 @@
 #  GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 #  ----------------------------------------------------------------------------
 #
-#  Shiny server logic. Metal price history is downloaded once, at app start
+#  Shiny server logic. Metal price history (Yahoo Finance futures) is downloaded once, at app start
 #  (not per-session), into `metals.df`; each output below subsets that
 #  data frame using the currently selected metal/currency `tag`
 #  (e.g. "XAU.USD") and either plots it directly or fits an ARIMA model
@@ -38,7 +38,7 @@ shinyServer(function(input, output) {
                                 approximation = FALSE,
                                 trace = FALSE)
         pred <- forecast(arima.fit, h = forecast.days)
-        ggplotly(arimaForecastPlot(pred, start = start.date, ylabel = tag))
+        ggplotly(arimaForecastPlot(pred, start = start.date, ylabel = tag, dates = metals.df$date))
     })
 
     # Data first differences plot
@@ -94,10 +94,8 @@ shinyServer(function(input, output) {
         pred <- forecast(arima.fit, h = forecast.days)
         pred <- as.data.frame(pred)
         pred <- cbind(date = 0, pred[-1])
-        pred$date <-
-            seq(from = end.date + 1,
-                to = end.date + forecast.days,
-                by = '1 day')
+        # prices exist only on trading days: date the horizon with weekdays
+        pred$date <- nextTradingDays(end.date, forecast.days)
         pred
     })
 

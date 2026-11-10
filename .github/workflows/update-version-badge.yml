@@ -27,7 +27,7 @@ jobs:
         run: |
           # Replace the img.shields.io version badge value (keep rest of URL)
           if grep -q "img.shields.io/badge/version-" README.md; then
-            perl -0777 -pe "s|(https://img.shields.io/badge/version-)[^\)]+|\1${VERSION}-blue.svg|g" -i README.md
+            perl -0777 -pe "s|(https://img.shields.io/badge/version-)[^\)]+|\${1}${VERSION}-blue.svg|g" -i README.md
             git add README.md || true
           else
             echo "No version badge found; skipping update"
