@@ -2,7 +2,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![R >= 4.1.0](https://img.shields.io/badge/R-%3E%3D4.1.0-276DC3.svg?logo=r)](https://www.r-project.org/)
 [![Code style: lintr](https://img.shields.io/badge/code%20style-lintr-blue.svg)](https://lintr.r-lib.org/)
-[![Shiny App](https://img.shields.io/badge/shiny-run%20locally-blue.svg?logo=rstudio)](#running-locally)
+[![Shiny App](https://img.shields.io/badge/shiny-live%20app-blue.svg?logo=rstudio)](https://kikesoft.shinyapps.io/Precious-Metals-Prediction)
 [![Cite this repository](https://img.shields.io/badge/cite-CITATION.cff-informational.svg)](CITATION.cff)
 [![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](https://github.com/EnriquePH/Precious-Metals-Prediction/releases)
 [![Releases](https://img.shields.io/github/v/release/EnriquePH/Precious-Metals-Prediction)](https://github.com/EnriquePH/Precious-Metals-Prediction/releases)
@@ -44,9 +44,7 @@ static PNG/PDF report images (like the one below).
 [Project gh-pages](http://enriqueph.github.io/Precious-Metals-Prediction/)
 
 ## Shiny server Url:
-The app is no longer hosted on shinyapps.io (it was at
-`kikesoft.shinyapps.io/Precious-Metals-Prediction`); it downloads its prices
-from the internet at start-up, so run it locally (below).
+[App url](https://kikesoft.shinyapps.io/Precious-Metals-Prediction)
 
 ## Running locally
 
