@@ -184,8 +184,9 @@ metalsPricePlot <- function(df, tag, method = 'loess') {
 #'
 #' @param df Wide metals data frame, as returned by [getPreciousMetals()].
 #' @param tag Column name to plot, e.g. `'XAU.USD'`.
-#' @param start.date Date the (undifferenced) series begins on.
-#' @param end.date Date the (undifferenced) series ends on.
+#' @param start.date,end.date Not used since version 1.3.0 (the differences
+#'   are dated with `df$date`, which has only trading days); kept so that
+#'   existing calls keep working.
 #' @param log10 If `TRUE` (default), differences the log10 of the series
 #'   instead of the raw series.
 #' @return A ggplot object.
