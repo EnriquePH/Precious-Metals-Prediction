@@ -8,19 +8,15 @@ machine-readable.
 ## [Unreleased]
 
 ### Added
-- Plantilla inicial de changelog.
+- `Makefile` with the common targets of the author's projects (`help`, `setup`, `format`, `lint`, `test`, `check`,
+  `docs`, `build`, `clean`, `release`) and `project.mk` with `app` and `reports`.
 
 ### Changed
-- 
-
-### Fixed
-- 
-
-### Deprecated
-- 
+- The app listens on port 8323 by default (`SHINY_PORT` still overrides it), following the author's port convention.
+- `.gitignore` rebuilt from the common templates (base + R), with this repo's own rules at the end.
 
 ### Removed
-- 
+- The `..Rcheck/` folder (output of `R CMD check`) is no longer tracked.
 
 ## [1.3.0] - 2026-11-10
 ### Changed

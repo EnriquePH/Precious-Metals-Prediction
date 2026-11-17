@@ -6,7 +6,7 @@
 #  Port/host are configurable via SHINY_PORT / SHINY_HOST env vars.
 #  ----------------------------------------------------------------------------
 
-port <- as.integer(Sys.getenv('SHINY_PORT', '3838'))
+port <- as.integer(Sys.getenv('SHINY_PORT', '8323'))  # convención 08-PUERTOS de PROYECTOS
 host <- Sys.getenv('SHINY_HOST', '127.0.0.1')
 
 shiny::runApp(

@@ -1,40 +1,114 @@
+# === base (00-CEREBRO/05-PLANTILLAS/01-GITIGNORE/00-base.gitignore) ===
+
+# Secrets: never in git
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+credentials*.json
+client_secret*.json
+.pypirc
+.netrc
+*recovery-codes*
+*Recovery-Codes*
+
+# Local material (convention: _local/ never goes to git)
+_local/
+
+# Project notes, plans and AI assistant files: local only (user decision 2026-11-08)
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+AGENTS.md
+PLAN.md
+PROYECTO.md
+TODO.md
+IDEAS.md
+_IDEAS.md
+_TODO.md
+NOTAS.md
+
+# Operating system
+.DS_Store
+Thumbs.db
+desktop.ini
+.directory
+.Trash-*/
+
+# Editors
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+\#*\#
+
+# Temporary files and logs
+*.tmp
+*.bak
+*.log
+
+# === r (00-CEREBRO/05-PLANTILLAS/01-GITIGNORE/20-r.gitignore) ===
+
+# Session and history
+.Rhistory
+.Rapp.history
+.RData
+.RDataTmp
+.Ruserdata
+.Rproj.user/
+
+# Credentials
+.Renviron
+.httr-oauth
+
+# Package build and check output
+/*.tar.gz
+/*.Rcheck/
+*-Ex.R
+
+# knitr / R Markdown
+*_cache/
+*.utf8.md
+*.knit.md
+rsconnect/
+
+# --- project (lo propio de este repo, de su .gitignore anterior)
 # R session / workspace
 .Rhistory
 .RData
 .Ruserdata
 *.Rout
-
 # RStudio
 # (the .Rproj file itself IS tracked; only per-user state is ignored)
 .Rproj.user/
-
 # Shiny / shinyapps.io deployment metadata (account-specific)
 rsconnect/
 rsconnect/documents/*.dcf
-
 # Secrets / local environment overrides
 .Renviron
 .Renviron.local
 .env
-
 # LaTeX (in case of knitr -> PDF output)
 *.log
 *.aux
 *.synctex.gz
 *.blg
-
 # OS cruft
 .DS_Store
 Thumbs.db
-
 # Editors
 .vscode/
 .idea/
-
 # Project-specific build artifacts
 README.html
 docs/
-
 # Generated PDF reports (report_usd.R / report_eur.R) and Quarto build state
 reports/
 /.quarto/
